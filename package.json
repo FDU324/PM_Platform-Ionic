@@ -1,8 +1,8 @@
 {
   "name": "pm-pj-ionic",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "FDU-324",
+  "homepage": "https://github.com/FDU324/PM_Platform-Ionic",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -36,5 +36,5 @@
     "@ionic/app-scripts": "3.1.5",
     "typescript": "2.4.2"
   },
-  "description": "An Ionic project"
+  "description": "PM Project, Platform Part"
 }
