@@ -1,0 +1,50 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>注册</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <form (ngSubmit)="onSubmit()" #signUpForm="ngForm">
+        <ion-list>
+
+            <ion-item>
+                <ion-label floating>用户名(不可修改)</ion-label>
+                <ion-input type="text" name="username" [(ngModel)]='username' required></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating>密码</ion-label>
+                <ion-input [type]="showPsw? 'text' : 'password'" name="password" [(ngModel)]="password" required></ion-input>
+                <button type="button" ion-button clear item-right (click)="changeShowPsw()">
+                    <ion-icon [name]="showPsw? 'eye' : 'eye-off'"></ion-icon>
+                </button>
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating>昵称</ion-label>
+                <ion-input type="text" name="nickname" [(ngModel)]="nickname" required></ion-input>
+            </ion-item>
+
+            <button ion-item type="button">
+                <ion-label>国家/地区</ion-label>
+                <city-picker item-content [cancelText]="'取消'" [doneText]="'完成'" [separator]="'-'" [citiesData]="cityData" [(ngModel)]="cityName"
+                    style="margin-top: 7px" item-right="" name="location">
+                </city-picker>
+            </button>
+
+            <button ion-item type="button" (click)="changeImage()">
+                <ion-label>头像</ion-label>
+                <ion-thumbnail item-right>
+                    <img [src]="userImage">
+                </ion-thumbnail>
+            </button>
+
+        </ion-list>
+
+        <div padding>
+            <button type="submit" ion-button color="primary" block [disabled]="!signUpForm.form.valid">注册</button>
+        </div>
+    </form>
+
+</ion-content>
