@@ -14,6 +14,7 @@ export class AccountService {
             return data;
         }).catch(err => {
             console.log('getCitiesData error');
+            return err;
         });
         // return this.http.get('../assets/data/city-data.json').subscribe(
         //     data => {
