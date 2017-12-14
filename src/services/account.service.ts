@@ -1,12 +1,23 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import { User } from '../models/user';
 
 @Injectable()
 export class AccountService {
-    constructor(public http: HttpClient,) {
+    currentUser: User;
 
+    constructor(public http: HttpClient, ) {
+        this.currentUser = new User('Me', 'Who am I', 'assets/icon/favicon.ico', '北京市-北京市-东城区');
+    }
+
+    getCurrentUser(): User {
+        return this.currentUser;
+    }
+
+    setCurrentUser(user: User): void {
+        this.currentUser = user;
     }
 
     getCitiesData() {

@@ -46,6 +46,7 @@ import {MomentTabPage} from '../pages/moment/moment-tab.component';
   Account Part
 */
 import {AccountTabPage} from '../pages/account/account-tab.component';
+import {AccountInfoModify} from '../pages/account/account-info-modify.component';
 
 /**
  * Services
@@ -70,6 +71,7 @@ import {ShopService} from '../services/shop.service';
         ShopTabPage,
         MomentTabPage,
         AccountTabPage,
+        AccountInfoModify,
         ItemPage,
     ],
     imports: [
@@ -90,6 +92,7 @@ import {ShopService} from '../services/shop.service';
         ShopTabPage,
         MomentTabPage,
         AccountTabPage,
+        AccountInfoModify,
         ItemPage,
     ],
     providers: [
