@@ -1,0 +1,27 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            {{game.name}}
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-grid *ngFor="let item of itemList">
+        <ion-row>
+            <ion-col col-3>{{item.icon}}</ion-col>
+            <ion-col col-9>
+                <ion-row>
+                    <ion-col col-9>{{item.name}}</ion-col>
+                    <ion-col col-3>{{item.price}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-9>{{item.description}}</ion-col>
+                    <ion-col col-3 (click)="purchaseItem(item.id)">购买</ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+</ion-content>

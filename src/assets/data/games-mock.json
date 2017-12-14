@@ -1,0 +1,11 @@
+[
+    {
+        "id": 0,
+        "name": "坦克大战",
+        "icon": "icon",
+        "image": "image",
+        "description": "新奇的双人合作坦克手游",
+        "category": "射击",
+        "downloadLink": "downloadLink"
+    }
+]

@@ -8,4 +8,23 @@
 
 <ion-content padding>
 
+    <ion-grid *ngFor="let game of gameList">
+        <ion-row>
+            <ion-col col-3>{{game.icon}}</ion-col>
+            <ion-col col-9>{{game.name}}</ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-12>{{game.image}}</ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-12>{{game.description}}</ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-3>{{game.category}}</ion-col>
+            <ion-col offset-3>{{game.downloadLink}}</ion-col>
+        </ion-row>
+    </ion-grid>
+
+
+
 </ion-content>

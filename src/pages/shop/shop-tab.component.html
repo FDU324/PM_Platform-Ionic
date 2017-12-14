@@ -8,4 +8,11 @@
 
 <ion-content padding>
 
+    <ion-grid *ngFor="let game of gameList">
+        <ion-row (click)="selectGame(game.id)">
+            <ion-col col-3>{{game.icon}}</ion-col>
+            <ion-col col-9>{{game.name}}</ion-col>
+        </ion-row>
+    </ion-grid>
+
 </ion-content>

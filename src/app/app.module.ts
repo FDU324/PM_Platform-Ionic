@@ -37,6 +37,7 @@ import {FriendTabPage} from '../pages/friend/friend-tab.component';
   Shop Part
 */
 import {ShopTabPage} from '../pages/shop/shop-tab.component';
+import {ItemPage} from '../pages/item/item';
 /*
   Moment Part
 */
@@ -54,6 +55,8 @@ import {MomentService} from '../services/moment.service';
 import {AccountService} from '../services/account.service';
 import {SocketService} from '../services/socket.service';
 import {ImgService} from '../services/img.service';
+import {GameService} from '../services/game.service';
+import {ShopService} from '../services/shop.service';
 
 @NgModule({
     declarations: [
@@ -67,6 +70,7 @@ import {ImgService} from '../services/img.service';
         ShopTabPage,
         MomentTabPage,
         AccountTabPage,
+        ItemPage,
     ],
     imports: [
         BrowserModule,
@@ -86,6 +90,7 @@ import {ImgService} from '../services/img.service';
         ShopTabPage,
         MomentTabPage,
         AccountTabPage,
+        ItemPage,
     ],
     providers: [
         Camera,
@@ -99,6 +104,8 @@ import {ImgService} from '../services/img.service';
         AccountService,
         ImgService,
         SocketService,
+        GameService,
+        ShopService,
     ]
 })
 export class AppModule {
