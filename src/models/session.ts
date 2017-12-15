@@ -5,6 +5,6 @@ export class Session {
     constructor(
         public friend: User,
         public messages: Message[],
-        public newMessageCount) {
+        public newMessageCount:Number) {
     }
 }

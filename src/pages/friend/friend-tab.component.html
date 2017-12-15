@@ -3,9 +3,35 @@
         <ion-title>
             好友
         </ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="addFriend()">
+                <ion-icon name="add"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
+    <!-- <ion-searchbar (ionInput)="searchFriends($event)"></ion-searchbar> -->
+    <button ion-item block="true" color="light" *ngIf="friendRequests.length>0" (click)="seeFriendRequests()">
+        新的朋友
+        <ion-badge item-right color="danger">{{friendRequests.length}}</ion-badge>
+    </button>
+
+    <ion-list>
+        <button ion-item *ngFor="let session of sessions" (click)="chat(session)">
+            <ion-avatar item-start>
+                <img [src]="session.friend.userImage">
+            </ion-avatar>
+            <ion-badge *ngIf="session.newMessageCount>0" item-right color="danger">{{session.newMessageCount}}</ion-badge>
+            <h3>{{session.friend.nickname}}</h3>
+            <p *ngIf="session.messages[0].type==='text'">{{session.messages[0].content}}</p>
+            <p *ngIf="session.messages[0].type==='images'">[图片]</p>
+            <p *ngIf="session.messages[0].type==='locations'">[位置]</p>
+            <p *ngIf="session.messages[0].type==='moment'">[动态]</p>
+            <ion-note item-right>{{session.messages[0].time | myDatePipe}}</ion-note>
+        </button>
+
+    </ion-list>
 
 </ion-content>

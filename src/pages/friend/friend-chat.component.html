@@ -1,0 +1,78 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>{{friend.nickname}}</ion-title>
+        <ion-buttons right>
+            <button ion-button icon-only (click)="searchMessage()">
+                <ion-icon name="search"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content scrollDownOnLoad='true' #content>
+    <ion-list *ngIf="session !== undefined">
+        <ion-item no-lines *ngFor="let message of session.messages">
+            <ion-row>
+                <ion-col text-center>
+                    <ion-note style="font-size:xx-small">{{message.time | myDatePipe}}</ion-note>
+                </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="message.from === 'send'">
+                <ion-col col-1>
+                </ion-col>
+                <ion-col col-9>
+                    <ion-card>
+                        <ion-card-content>
+                            <p text-wrap text-left>{{message.content}}</p>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-col>
+                <ion-col col-2>
+                    <ion-avatar>
+                        <img [src]="user.userImage" (click)="showUserDetail('me')">
+                    </ion-avatar>
+                </ion-col>
+            </ion-row>
+
+            <ion-row *ngIf="message.from === 'receive'">
+                <ion-col col-2>
+                    <ion-avatar>
+                        <img [src]="friend.userImage" (click)="showUserDetail('friend')">
+                    </ion-avatar>
+                </ion-col>
+                <ion-col col-9>
+                    <ion-card>
+                        <ion-card-content>
+                            <p text-wrap text-left>{{message.content}}</p>
+                        </ion-card-content>
+                    </ion-card>
+                </ion-col>
+                <ion-col col-1>
+                </ion-col>
+            </ion-row>
+        </ion-item>
+
+    </ion-list>
+
+</ion-content>
+
+
+<ion-footer>
+    <form (ngSubmit)="submitInput()" #sessionForm="ngForm">
+        <ion-grid padding-right>
+            <ion-row>
+                <ion-col col-10>
+                    <ion-input placeholder="请输入" required [(ngModel)]="inputContent" name="inputContent" #inputTem></ion-input>
+                </ion-col>
+                <ion-col col-2>
+                    <button ion-button type="submit" color="secondary" [disabled]="!sessionForm.form.valid">发送
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </form>
+</ion-footer>
