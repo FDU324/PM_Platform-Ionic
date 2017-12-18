@@ -52,7 +52,7 @@ import { AccountTabPage } from '../pages/account/account-tab.component';
 import { AccountInfoModify } from '../pages/account/account-info-modify.component';
 
 /**
- * Services
+ * Services & Pipe
  */
 import { FriendService } from '../services/friend.service';
 import { MomentService } from '../services/moment.service';

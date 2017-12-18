@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Session } from '../models/session';
 import { User } from '../models/user';
 import { Message } from '../models/message';
-import { Page } from 'ionic-angular/navigation/nav-util';
 import { SocketService } from './socket.service';
 
 @Injectable()
