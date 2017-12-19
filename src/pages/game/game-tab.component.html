@@ -21,7 +21,7 @@
         </ion-row>
         <ion-row>
             <ion-col col-3>{{game.category}}</ion-col>
-            <ion-col offset-3>{{game.downloadLink}}</ion-col>
+            <ion-col offset-3 (click)="downloadGame()">{{game.downloadLink}}</ion-col>
         </ion-row>
     </ion-grid>
 
