@@ -9,6 +9,7 @@ export class Game {
         public image: string,
         public description: string,
         public category: string,
-        public downloadLink: string) {
+        public downloadLink: string,
+        public packageName: string) {
     }
 }

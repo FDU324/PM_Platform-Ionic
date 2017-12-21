@@ -6,6 +6,8 @@
         "image": "image",
         "description": "新奇的双人合作坦克手游",
         "category": "射击",
-        "downloadLink": "downloadLink"
+        "downloadLink": "http://120.25.238.161/test.apk",
+        "packageName": "com.FDU.TANK",
+        "downloadText": "test"
     }
 ]
