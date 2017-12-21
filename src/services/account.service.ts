@@ -9,7 +9,7 @@ export class AccountService {
     currentUser: User;
 
     constructor(public http: HttpClient, ) {
-        this.currentUser = new User('Me', 'Who am I', 'assets/icon/favicon.ico', '北京市-北京市-东城区');
+        this.currentUser = new User('Me', 'Who am I', 'assets/icon/favicon.ico');
     }
 
     getCurrentUser(): User {
@@ -18,23 +18,6 @@ export class AccountService {
 
     setCurrentUser(user: User): void {
         this.currentUser = user;
-    }
-
-    getCitiesData() {
-        return this.http.get('../assets/data/city-data.json').toPromise().then(data => {
-            return data;
-        }).catch(err => {
-            console.log('getCitiesData error');
-            return err;
-        });
-        // return this.http.get('../assets/data/city-data.json').subscribe(
-        //     data => {
-        //         return data;
-        //     },
-        //     err => {
-        //         console.log('getCitiesData error');
-        //     }
-        // );
     }
 
 

@@ -2,7 +2,6 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { CityPickerModule } from "ionic2-city-picker";
 
 /**
  * Native Modules
@@ -85,7 +84,6 @@ import { MyDatePipe } from './my-date.pipe';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    CityPickerModule,
     HttpClientModule,
   ],
   bootstrap: [IonicApp],

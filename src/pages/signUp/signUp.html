@@ -26,13 +26,6 @@
                 <ion-input type="text" name="nickname" [(ngModel)]="nickname" required></ion-input>
             </ion-item>
 
-            <button ion-item type="button">
-                <ion-label>国家/地区</ion-label>
-                <city-picker item-content [cancelText]="'取消'" [doneText]="'完成'" [separator]="'-'" [citiesData]="cityData" [(ngModel)]="cityName"
-                    style="margin-top: 7px" item-right="" name="location">
-                </city-picker>
-            </button>
-
             <button ion-item type="button" (click)="changeImage()">
                 <ion-label>头像</ion-label>
                 <ion-thumbnail item-right>

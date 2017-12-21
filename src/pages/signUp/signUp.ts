@@ -23,8 +23,6 @@ export class SignUpPage {
     defaultImage: string;
     userImage: string;
     showPsw: boolean;
-    cityData: any[];
-    cityName: string;
 
     constructor(
         public navCtrl: NavController,
@@ -41,15 +39,7 @@ export class SignUpPage {
         this.nickname = '';
         this.defaultImage = 'http://120.25.238.161:3000/images/userimage/default.ico';
         this.userImage = this.defaultImage;
-        this.cityName = "北京市-北京市-东城区";
-        this.setCityPickerData();
         this.showPsw = false;
-    }
-
-    setCityPickerData() {
-        this.accountService.getCitiesData().then(data => {
-            this.cityData = data;
-        });
     }
 
     changeShowPsw() {

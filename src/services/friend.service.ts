@@ -16,14 +16,14 @@ export class FriendService {
         this.observers = [];
         this.friendRequestsNum = 1;
         this.friendReqList = [
-            new User('newOne', '新来的', 'assets/icon/favicon.ico', '北京市-北京市-东城区'),
+            new User('newOne', '新来的', 'assets/icon/favicon.ico'),
         ];
     }
 
     mockSessions(): Session[] {
         const ret: Session[] = [];
-        const friend1 = new User('oneTest', '一号测试员', 'assets/icon/favicon.ico', '北京市-北京市-东城区');
-        const friend2 = new User('twoTest', '二号测试员', 'assets/icon/favicon.ico', '北京市-北京市-东城区');
+        const friend1 = new User('oneTest', '一号测试员', 'assets/icon/favicon.ico');
+        const friend2 = new User('twoTest', '二号测试员', 'assets/icon/favicon.ico');
 
         const message1: Message[] = [];
         const message2: Message[] = [];
