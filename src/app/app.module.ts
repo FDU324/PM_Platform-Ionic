@@ -39,7 +39,7 @@ import { FriendRequestPage } from '../pages/friend/friend-request.component';
   Shop Part
 */
 import { ShopTabPage } from '../pages/shop/shop-tab.component';
-import { ItemPage } from '../pages/item/item';
+import { ItemPage } from '../pages/shop/item/item.component';
 /*
   Moment Part
 */
