@@ -25,7 +25,24 @@
 ### 游戏列表页面
 - 获取游戏列表
   - 参数：无
-  - 返回：游戏列表，包含id、name、icon、image、description、category、downloadLink、packageName
+  - 返回：json
+
+```json 
+        [
+            {
+                id: ,
+                name: ,
+                icon: ,
+                image: ,
+                description: ,
+                category: ,
+                downloadLink: ,
+                packageName: ,
+                uri: ,
+            },
+             ...
+        ]
+```
 
 ### 好友聊天
 
@@ -41,7 +58,21 @@
 ### 商城
 - 获取某个游戏的商品列表
   - 参数：无
-  - 返回：商品列表，包含id、name、price、virtualCurrency、storeNum
+  - 返回：json
+  
+```json 
+        [
+            {
+                id: ,
+                name: ,
+                price: ,
+                virtualCurrency: ,
+                storeNum: ,
+            },
+             ...
+        ]
+```
+  
 - 购买商品
   - 参数：id、price、virtualCurrency
   - 返回：storeNum
