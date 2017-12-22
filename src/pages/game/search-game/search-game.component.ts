@@ -2,41 +2,26 @@ import { Component } from '@angular/core';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener';
-import {NavController, LoadingController} from 'ionic-angular';
-import { GameService } from "../../services/game.service";
-import { SearchGamePage } from "./search-game/search-game.component";
+import {NavController, LoadingController, NavParams} from 'ionic-angular';
+import { GameService } from "../../../services/game.service";
 
 @Component({
-    selector: 'page-game-tab',
-    templateUrl: 'game-tab.component.html'
+    selector: 'page-search-game',
+    templateUrl: 'search-game.component.html'
 })
 
-export class GameTabPage {
+export class SearchGamePage {
     gameList: any[];
-    showSearchBar: boolean;
+    title: string;
 
     constructor(
         public navCtrl: NavController,
+        public navParams: NavParams,
         public loadingCtrl: LoadingController,
         public gameService: GameService,
     ) {
-        this.gameService.getGameList().then(data => {
-            this.gameList = data;
-            for (let game of this.gameList) {
-                let sApp = startApp.set({
-                    "package": "com.FDU.TANK",
-                    "component": ["com.FDU.TANK","com.FDU.TANK.com.FDU.TANK.MainActivity"]
-                },{
-                    "username": "kevin"
-                });
-                sApp.check(function(values) {
-                    game.downloadText = "打开";
-                }, function(error) {
-                    game.downloadText = "下载";
-                });
-            }
-        });
-        this.showSearchBar = false;
+        this.title = this.navParams.data.title;
+        this.gameList = this.navParams.data.gameList;
     }
 
     downloadGame(game) {
@@ -90,25 +75,6 @@ export class GameTabPage {
                 console.log(error.http_status);
                 console.log(error.target);
             });
-        }
-    }
-
-    toggleSearchBar() {
-        this.showSearchBar = !this.showSearchBar;
-    }
-
-    searchGame(ev: any) {
-        // set val to the value of the searchbar
-        let val = ev.target.value;
-
-        // if the value is an empty string don't filter the items
-        if (val && val.trim() != '') {
-            console.log(val);
-            this.toggleSearchBar();
-            this.navCtrl.push(SearchGamePage, {
-                title: val,
-                gameList: this.gameList
-            })
         }
     }
 

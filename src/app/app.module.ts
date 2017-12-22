@@ -28,6 +28,7 @@ import { TabsPage } from '../pages/tabs/tabs';
   Game Part
 */
 import { GameTabPage } from '../pages/game/game-tab.component';
+import { SearchGamePage } from '../pages/game/search-game/search-game.component';
 /*
   Friend Part
 */
@@ -80,6 +81,7 @@ import { MyDatePipe } from './my-date.pipe';
     AccountTabPage,
     AccountInfoModify,
     ItemPage,
+    SearchGamePage
   ],
   imports: [
     BrowserModule,
@@ -103,6 +105,7 @@ import { MyDatePipe } from './my-date.pipe';
     AccountTabPage,
     AccountInfoModify,
     ItemPage,
+    SearchGamePage
   ],
   providers: [
     Camera,
