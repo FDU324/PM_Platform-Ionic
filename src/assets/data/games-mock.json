@@ -8,6 +8,7 @@
         "category": "射击",
         "downloadLink": "http://120.25.238.161/test.apk",
         "packageName": "com.FDU.TANK",
-        "downloadText": "test"
+        "downloadText": "test",
+        "uri": "tank://TANK.FDU.com/launch?username="
     }
 ]

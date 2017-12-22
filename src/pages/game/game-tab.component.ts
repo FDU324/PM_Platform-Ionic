@@ -24,10 +24,7 @@ export class GameTabPage {
             this.gameList = data;
             for (let game of this.gameList) {
                 let sApp = startApp.set({
-                    "package": "com.FDU.TANK",
-                    "component": ["com.FDU.TANK","com.FDU.TANK.com.FDU.TANK.MainActivity"]
-                },{
-                    "username": "kevin"
+                    "package": game.packageName,
                 });
                 sApp.check(function(values) {
                     game.downloadText = "打开";
@@ -43,7 +40,8 @@ export class GameTabPage {
 
         if (game.downloadText === "打开") {
             let sApp = startApp.set({
-                "package": game.packageName
+                "action": "ACTION_VIEW",
+                "uri": game.uri+"test"
             });
 
             sApp.start(function() { /* success */
