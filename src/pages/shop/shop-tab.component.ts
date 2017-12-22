@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { GameService } from "../../services/game.service";
-import { ItemPage } from "item/item.component";
+import { ItemPage } from "./item/item.component";
 
 @Component({
     selector: 'page-shop-tab',

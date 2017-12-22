@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
-import { GameService } from "../../services/game.service";
-import { ShopService } from "../../services/shop.service";
+import { GameService } from "../../../services/game.service";
+import { ShopService } from "../../../services/shop.service";
 
 @Component({
-    selector: 'page-item',
-    templateUrl: 'item.html'
+    selector: 'page-item-component',
+    templateUrl: 'item.component.html'
 })
 export class ItemPage {
     game: any;
