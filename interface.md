@@ -1,10 +1,26 @@
 ### 账号
-- 登录
+- 登录 post请求 
+  - /login 
   - 参数：username、password
-  - 返回：成功或失败的状态
-- 注册
-  - 参数：username、password、nickname、userImage
-  - 返回：成功或失败的状态
+  - 返回：
+    - 失败： 'fail'
+    - 成功： json 
+    
+```json 
+        {
+            username: ,
+            email: ,
+            nickname: ,
+            userImage: ,
+        }
+```
+
+- 注册 post请求  
+  - /reg
+  - 参数：username、email、password、nickname、userImage
+  - 返回：
+    - 成功: 'success'
+    - 失败: 'fail'
  
 ### 游戏列表页面
 - 获取游戏列表
@@ -13,7 +29,14 @@
 
 ### 好友聊天
 
+
+
 ### 动态
+- 获取当前用户所有可见动态， get请求
+  - /getMoments?username=
+  - 返回值: 待定
+
+
 
 ### 商城
 - 获取某个游戏的商品列表
