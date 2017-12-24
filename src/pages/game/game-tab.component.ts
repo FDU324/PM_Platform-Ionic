@@ -4,7 +4,10 @@ import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener';
 import {NavController, LoadingController} from 'ionic-angular';
 import { GameService } from "../../services/game.service";
+import { AccountService } from "../../services/account.service";
 import { SearchGamePage } from "./search-game/search-game.component";
+
+import {util} from 'util';
 
 @Component({
     selector: 'page-game-tab',
@@ -14,39 +17,55 @@ import { SearchGamePage } from "./search-game/search-game.component";
 export class GameTabPage {
     gameList: any[];
     showSearchBar: boolean;
+    username: string;
+    nickname: string;
+    
 
     constructor(
         public navCtrl: NavController,
         public loadingCtrl: LoadingController,
         public gameService: GameService,
+        public accountService: AccountService
     ) {
         this.gameService.getGameList().then(data => {
             this.gameList = data;
-            // for (let game of this.gameList) {
-            //     let sApp = startApp.set({
-            //         "package": game.packageName,
-            //     });
-            //     sApp.check(function(values) {
-            //         game.downloadText = "打开";
-            //     }, function(error) {
-            //         game.downloadText = "下载";
-            //     });
-            // }
+            for (let game of this.gameList) {
+                game.downloading = false;
+                game.loadPercent = 0;
+                startApp.set({
+                    "package": game.packageName,
+                }).check((values) => {
+                    game.startText = "打开";
+                }, (error) => {
+                    game.startText = "下载";
+                });
+            }
+            
         });
+        let currentUser = this.accountService.getCurrentUser();
+        this.username = currentUser.username;
+        this.nickname = currentUser.nickname;
         this.showSearchBar = false;
     }
 
-    downloadGame(game) {
+    startGame(game) {
+        startApp.set({
+            "package": game.packageName,
+        }).check((values) => {
+            game.startText = "打开";
+        }, (error) => {
+            game.startText = "下载";
+        });
 
-        if (game.downloadText === "打开") {
+        if (game.startText === "打开") {
             let sApp = startApp.set({
                 "action": "ACTION_VIEW",
-                "uri": game.uri+"test"
+                "uri": util.format(game.uri, this.username, this.nickname)
             });
 
-            sApp.start(function() { /* success */
+            sApp.start(() => { /* success */
                 console.log("OK");
-            }, function(error) { /* fail */
+            }, (error) => { /* fail */
                 console.log(error);
             });
         } else {
@@ -54,32 +73,25 @@ export class GameTabPage {
             const fileTransfer = new FileTransfer().create();
             const uri = encodeURI(game.downloadLink);
 
-            let loading = this.loadingCtrl.create({
-                content: '下载进度：0%'
-            });
-            loading.present();
-
-            let no:number = 0;
+           
+            game.downloading = true;
             fileTransfer.onProgress((progressEvent: ProgressEvent) =>{
                 if (progressEvent.lengthComputable) {
-                    no = progressEvent.loaded / progressEvent.total * 100;
+                   game.loadPersent = progressEvent.loaded / progressEvent.total * 100;
                 }
             });
+            
+            // let timer = setInterval(() => {
+            //     game.loadPercent += 1;
+            //     if (game.loadPercent >= 100) {
+            //         clearInterval(timer);
+            //     }
+            // }, 300);
 
-            let timer = setInterval(() => {
-                loading.setContent('下载进度：' + Math.floor(no) + '%');
-                if (no >= 99) {
-                    clearInterval(timer);
-                }
-            }, 300);
-
-            fileTransfer.download(uri, file.externalApplicationStorageDirectory+game.name+".apk").then((entry) => {
+            fileTransfer.download(uri, file.externalApplicationStorageDirectory+"/apk/"+game.name+".apk").then((entry) => {
                 console.log('download complete: ' + entry.toURL());
-                if (timer) {
-                    clearInterval(timer);
-                }
-                loading.dismiss();
-                const fileOpener = new FileOpener();
+                game.downloading = false;
+                var fileOpener = new FileOpener();
                 fileOpener.open(entry.toURL(), 'application/vnd.android.package-archive')
                     .then(() => console.log('File is opened'))
                     .catch(e => console.log('Error opening file', e));

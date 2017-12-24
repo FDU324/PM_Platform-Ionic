@@ -1,6 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { JsonpModule } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 
 /**
@@ -87,6 +88,7 @@ import { MyDatePipe } from './my-date.pipe';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
+    JsonpModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

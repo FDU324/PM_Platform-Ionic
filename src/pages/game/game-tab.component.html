@@ -1,7 +1,7 @@
 <ion-header>
     <ion-navbar>
         <ion-title *ngIf="!showSearchBar">
-            <div>主页 游戏</div>
+            <div>游戏</div>
         </ion-title>
         <ion-buttons *ngIf="!showSearchBar" end>
             <button ion-button icon-only (click)="toggleSearchBar()">
@@ -14,21 +14,37 @@
 
 <ion-content padding>
 
-    <ion-grid *ngFor="let game of gameList">
+    <ion-grid *ngFor="let game of gameList" style="height:140px;border-bottom:medium solid #d0d0d0">
+            
         <ion-row>
-            <ion-col col-3>{{game.icon}}</ion-col>
-            <ion-col col-9>{{game.name}}</ion-col>
+            <ion-col col-4><img [src]="game.icon" style="width:100%;height:100%;"/></ion-col>
+            <ion-col col-8>
+                <ion-row>
+                    <ion-col col-9 style="font-size:xx-large;">{{game.name}}</ion-col>
+                    <ion-col col-3><ion-note style="font-size:small;">{{game.category}}</ion-note></ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-12><ion-note style="font-size:small;">{{game.description}}</ion-note></ion-col>
+                </ion-row>
+                <ion-row style="height:40px">
+                    <ion-col col-9 no-padding>
+                        <img *ngIf="game.downloading" src='assets/icon/download_bg.jpg' style="position:absolute;top:20px;" width="100%" height="10px"/>
+                        <img *ngIf="game.downloading" src='assets/icon/download.jpg' style="position:absolute;top:21px;" [style.width.%]="game.loadPercent" height="8px"/>
+                    </ion-col>
+                    <!-- <ion-img src="assets/icon/download.jpg" [width]="loadPercent" height=10></ion-img> -->
+                    <ion-col *ngIf="!game.downloading" col-3 (click)="startGame(game)">
+                        <button ion-button clear no-padding style="font-size:small">{{game.startText}}</button>
+                    </ion-col>
+                    <ion-col *ngIf="game.downloading" col-3>
+                        <ion-note style="position:absolute;top:20px;font-size:x-small;align-self:flex-start;">
+                            &nbsp;{{game.loadPercent}} %
+                        </ion-note>
+                    </ion-col>
+                </ion-row>
+            </ion-col>
         </ion-row>
-        <ion-row>
-            <ion-col col-12>{{game.image}}</ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col col-12>{{game.description}}</ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col col-3>{{game.category}}</ion-col>
-            <ion-col offset-3 (click)="downloadGame(game)">{{game.downloadText}}</ion-col>
-        </ion-row>
+        
+        
     </ion-grid>
 
 </ion-content>

@@ -1,14 +1,23 @@
 [
     {
         "id": 0,
-        "name": "坦克大战",
-        "icon": "icon",
-        "image": "image",
+        "name": "Tank",
+        "icon": "http://120.25.238.161/PM/tank/tank.jpg",
         "description": "新奇的双人合作坦克手游",
         "category": "射击",
-        "downloadLink": "http://120.25.238.161/test.apk",
+        "downloadLink": "http://120.25.238.161/PM/tank/tank.apk",
         "packageName": "com.FDU.TANK",
-        "downloadText": "test",
-        "uri": "tank://TANK.FDU.com/launch?username="
+        "uri": "tank://TANK.FDU.com/launch?username=%s&nickname=%s"
+    },
+    {
+        "id": 1,
+        "name": "Tank",
+        "icon": "http://120.25.238.161/PM/tank/tank.jpg",
+        "description": "新奇的双人合作坦克手游",
+        "category": "射击",
+        "downloadLink": "http://120.25.238.161/PM/tank/tank.apk",
+        "packageName": "com.FDU.TANK",
+        "uri": "tank://TANK.FDU.com/launch?username=%s&nickname=%s"
     }
+   
 ]
