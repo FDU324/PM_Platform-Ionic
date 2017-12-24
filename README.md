@@ -7,6 +7,18 @@
 ---
 
 
+## 测试账号
+
+|username | password|
+|:---:|:----:|
+|test2|123456|
+|test3|123456|
+|test4|123456|
+
+
+---
+
+
 ## Initial
 
 > npm install -g ionic cordova

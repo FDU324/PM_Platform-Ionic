@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {NavController} from 'ionic-angular';
 
 import {User} from "../../models/user";
 import {Moment} from "../../models/moment";
-import {AccountService} from "../../services/account.service";
 import {MomentService} from "../../services/moment.service";
+import {UserService} from "../../services/user.service";
 
 @Component({
     selector: 'page-moment-tab',
@@ -12,12 +12,12 @@ import {MomentService} from "../../services/moment.service";
 })
 export class MomentTabPage {
     user: User;
-    moments:Moment[];
+    moments: Moment[];
 
     constructor(public navCtrl: NavController,
-                public accountService:AccountService,
-                public momentService:MomentService) {
-        this.user = this.accountService.getCurrentUser();
+                public userService: UserService,
+                public momentService: MomentService) {
+        this.user = this.userService.getCurrentUser();
         this.moments = this.momentService.getMoments();
     }
 

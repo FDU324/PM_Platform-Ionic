@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
-import { NavController, App } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {NavController, App} from 'ionic-angular';
 
-import { Session } from '../../models/session';
-import { User } from '../../models/user';
+import {Session} from '../../models/session';
+import {User} from '../../models/user';
 
-import { AccountService } from '../../services/account.service';
-import { FriendService } from '../../services/friend.service';
+import {FriendService} from '../../services/friend.service';
 
-import { FriendChatPage } from './friend-chat.component';
-import { FriendAddPage } from './friend-add.component';
-import { FriendRequestPage } from './friend-request.component';
+import {FriendChatPage} from './friend-chat.component';
+import {FriendAddPage} from './friend-add.component';
+import {FriendRequestPage} from './friend-request.component';
+import {UserService} from "../../services/user.service";
 
 @Component({
     templateUrl: 'friend-tab.component.html'
@@ -20,10 +20,10 @@ export class FriendTabPage {
     friendRequests: User[];
 
     constructor(public navCtrl: NavController,
-        public appCtrl: App,
-        public accountService: AccountService,
-        public friendService: FriendService) {
-        this.user = this.accountService.getCurrentUser();
+                public appCtrl: App,
+                public userService: UserService,
+                public friendService: FriendService) {
+        this.user = this.userService.getCurrentUser();
         this.sessions = this.friendService.getSessions();
         this.friendRequests = this.friendService.getFriendRequests();
     }

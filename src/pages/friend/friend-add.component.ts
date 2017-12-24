@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {NavController, NavParams, ToastController} from 'ionic-angular';
 
-import { User } from '../../models/user';
+import {User} from '../../models/user';
 
-import { FriendService } from '../../services/friend.service';
+import {FriendService} from '../../services/friend.service';
 
 @Component({
     templateUrl: 'friend-add.component.html',
@@ -13,9 +13,9 @@ export class FriendAddPage {
     username: string;
 
     constructor(public navCtrl: NavController,
-        public navParams: NavParams,
-        public toastCtrl: ToastController,
-        public friendService: FriendService) {
+                public navParams: NavParams,
+                public toastCtrl: ToastController,
+                public friendService: FriendService) {
         this.username = '';
         this.user = navParams.get('user');
     }
@@ -74,8 +74,8 @@ export class FriendAddPage {
                     toast.present();
                 }
             }).catch(err => {
-                console.log(err);
-            });
+            console.log(err);
+        });
     }
 
 

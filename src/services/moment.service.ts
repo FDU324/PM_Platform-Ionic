@@ -1,29 +1,51 @@
 import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+
 import {Moment} from "../models/moment";
 import {User} from "../models/user";
-import {Game} from "../models/game";
+import {SocketService} from "./socket.service";
+import {UserService} from "./user.service";
 
 @Injectable()
 export class MomentService {
+    user: User;
     moments: Moment[];
     observers: any[];
 
-    constructor() {
-        this.moments = this.mockMoments();
-        this.observers = [];
+    constructor(public http: HttpClient,
+                public userService: UserService,
+                public socketService: SocketService) {
     }
 
     updateAfterLogin() {
+        this.user = this.userService.getCurrentUser();
         this.observers = [];
 
+        // TODO:建立socket后取消下一行注释
+        // this.receiveSocketOn();
+
+        return this.requestMoments().then(data => {
+            console.log(data);
+            this.moments = JSON.parse(JSON.stringify(data));
+        }).catch(err => {
+            console.log('MomentService err' + err);
+        });
     }
 
-    mockMoments(): Moment[] {
-        const friend1 = new User('oneTest', '123@me.com','一号测试员', 'assets/icon/favicon.ico');
-        const game1 = new Game(0, '坦克大战', 'assets/icon/favicon.ico', 'assets/icon/favicon.ico', '新奇的双人合作坦克手游', '射击', 'downloadLink', 'com.FDU.TANK', "打开", false, 0);
-        return [
-            new Moment("sdfa", friend1, game1, Date.now(), '哈哈哈俗话说得好', 'assets/icon/favicon.ico'),
-        ];
+    receiveSocketOn() {
+        this.socketService.getSocket().on('receiveMoment', (data) => {
+            this.moments = JSON.parse(JSON.stringify(data));
+        });
+    }
+
+    requestMoments() {
+        // TODO:改为服务器地址
+        return this.http.get('assets/data/moments-mock.json').toPromise().then(data => {
+            return data;
+        }).catch(err => {
+            console.log('getGameList error');
+            return this.moments;
+        });
     }
 
     getMoments(): Moment[] {

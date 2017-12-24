@@ -9,6 +9,7 @@ import { SearchGamePage } from "./search-game/search-game.component";
 import { Game } from "../../models/game";
 
 import {util} from 'util';
+import {UserService} from "../../services/user.service";
 
 @Component({
     selector: 'page-game-tab',
@@ -21,17 +22,16 @@ export class GameTabPage {
     username: string;
     nickname: string;
 
-
     constructor(
         public navCtrl: NavController,
         public loadingCtrl: LoadingController,
         public gameService: GameService,
-        public accountService: AccountService
+        public userService: UserService
     ) {
         this.gameService.getGameList().then(data => {
             this.gameList = data;
         });
-        let currentUser = this.accountService.getCurrentUser();
+        let currentUser = this.userService.getCurrentUser();
         this.username = currentUser.username;
         this.nickname = currentUser.nickname;
         this.showSearchBar = false;
@@ -61,8 +61,7 @@ export class GameTabPage {
             const file = new File();
             const fileTransfer = new FileTransfer().create();
             const uri = encodeURI(game.downloadLink);
-
-
+            
             game.downloading = true;
             fileTransfer.onProgress((progressEvent: ProgressEvent) =>{
                 if (progressEvent.lengthComputable) {
