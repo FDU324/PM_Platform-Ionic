@@ -66,19 +66,21 @@ export class GameTabPage {
             game.downloading = true;
             fileTransfer.onProgress((progressEvent: ProgressEvent) =>{
                 if (progressEvent.lengthComputable) {
-                   game.loadPercent = progressEvent.loaded / progressEvent.total * 100;
+                    game.loadPercent = Math.floor(progressEvent.loaded / progressEvent.total * 10000) / 100;
                 }
             });
 
-            // let timer = setInterval(() => {
-            //     game.loadPercent += 1;
-            //     if (game.loadPercent >= 100) {
-            //         clearInterval(timer);
-            //     }
-            // }, 300);
+            let timer = setInterval(() => {
+                if (game.loadPercent >= 99.99) {
+                    clearInterval(timer);
+                }
+            }, 300);
 
-            fileTransfer.download(uri, file.externalApplicationStorageDirectory+"/apk/game.apk").then((entry) => {
+            fileTransfer.download(uri, file.externalApplicationStorageDirectory+"/game.apk").then((entry) => {
                 console.log('download complete: ' + entry.toURL());
+                if (timer) {
+                    clearInterval(timer);
+                }
                 game.downloading = false;
                 var fileOpener = new FileOpener();
                 fileOpener.open(entry.toURL(), 'application/vnd.android.package-archive')

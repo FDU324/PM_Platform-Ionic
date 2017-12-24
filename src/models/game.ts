@@ -11,6 +11,8 @@ export class Game {
         public category: string,
         public downloadLink: string,
         public packageName: string,
-        public downloadText: string) {
+        public startText: string,
+        public downloading: boolean,
+        public loadPercent: number) {
     }
 }
