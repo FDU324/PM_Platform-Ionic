@@ -1,5 +1,7 @@
 # PM_Platform-Ionic
 
+## [接口](https://github.com/FDU324/PM_Platform-Ionic/blob/master/interface.md)
+
 ## [后端repo](https://github.com/billy191/Steamlike_Backend)
 
 ---
