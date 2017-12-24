@@ -8,6 +8,7 @@ import { AccountService } from "../../services/account.service";
 import { SearchGamePage } from "./search-game/search-game.component";
 
 import {util} from 'util';
+import {UserService} from "../../services/user.service";
 
 @Component({
     selector: 'page-game-tab',
@@ -19,30 +20,29 @@ export class GameTabPage {
     showSearchBar: boolean;
     username: string;
     nickname: string;
-    
 
     constructor(
         public navCtrl: NavController,
         public loadingCtrl: LoadingController,
         public gameService: GameService,
-        public accountService: AccountService
+        public userService: UserService
     ) {
         this.gameService.getGameList().then(data => {
             this.gameList = data;
-            for (let game of this.gameList) {
-                game.downloading = false;
-                game.loadPercent = 0;
-                startApp.set({
-                    "package": game.packageName,
-                }).check((values) => {
-                    game.startText = "打开";
-                }, (error) => {
-                    game.startText = "下载";
-                });
-            }
-            
+            // for (let game of this.gameList) {
+            //     game.downloading = false;
+            //     game.loadPercent = 0;
+            //     startApp.set({
+            //         "package": game.packageName,
+            //     }).check((values) => {
+            //         game.startText = "打开";
+            //     }, (error) => {
+            //         game.startText = "下载";
+            //     });
+            // }
+
         });
-        let currentUser = this.accountService.getCurrentUser();
+        let currentUser = this.userService.getCurrentUser();
         this.username = currentUser.username;
         this.nickname = currentUser.nickname;
         this.showSearchBar = false;
@@ -73,14 +73,14 @@ export class GameTabPage {
             const fileTransfer = new FileTransfer().create();
             const uri = encodeURI(game.downloadLink);
 
-           
+
             game.downloading = true;
             fileTransfer.onProgress((progressEvent: ProgressEvent) =>{
                 if (progressEvent.lengthComputable) {
                    game.loadPersent = progressEvent.loaded / progressEvent.total * 100;
                 }
             });
-            
+
             // let timer = setInterval(() => {
             //     game.loadPercent += 1;
             //     if (game.loadPercent >= 100) {
