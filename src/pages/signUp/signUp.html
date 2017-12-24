@@ -15,7 +15,9 @@
 
             <ion-item>
                 <ion-label floating>邮箱</ion-label>
-                <ion-input type="email" name="email" [(ngModel)]='email' required></ion-input>
+                <ion-input type="email" name="email" [(ngModel)]='email'
+                           pattern="^[a-z0-9]+([._\\\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$"
+                           required></ion-input>
             </ion-item>
 
             <ion-item>

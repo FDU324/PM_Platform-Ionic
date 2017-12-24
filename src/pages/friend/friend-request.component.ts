@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { NavController, App } from 'ionic-angular';
-import { User } from '../../models/user';
-import { FriendService } from '../../services/friend.service';
+import {Component} from '@angular/core';
+import {NavController, App} from 'ionic-angular';
+import {User} from '../../models/user';
+import {FriendService} from '../../services/friend.service';
 import {UserService} from "../../services/user.service";
 
 
@@ -14,9 +14,8 @@ export class FriendRequestPage {
     friendRequests: User[];
 
     constructor(public navCtrl: NavController,
-        public userService: UserService,
-        public friendService: FriendService,
-    ) {
+                public userService: UserService,
+                public friendService: FriendService,) {
         this.user = this.userService.getCurrentUser();
         this.friendRequests = this.friendService.getFriendRequests();
     }
@@ -37,10 +36,6 @@ export class FriendRequestPage {
         this.friendService.acceptRequest(this.user.username, friend.username);
         console.log('accept request!');
     }
-
-
-
-
 
 
 }

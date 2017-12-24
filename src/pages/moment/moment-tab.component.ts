@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import {Component} from '@angular/core';
+import {NavController} from 'ionic-angular';
 
 import {User} from "../../models/user";
 import {Moment} from "../../models/moment";
@@ -12,11 +12,11 @@ import {UserService} from "../../services/user.service";
 })
 export class MomentTabPage {
     user: User;
-    moments:Moment[];
+    moments: Moment[];
 
     constructor(public navCtrl: NavController,
-                public userService:UserService,
-                public momentService:MomentService) {
+                public userService: UserService,
+                public momentService: MomentService) {
         this.user = this.userService.getCurrentUser();
         this.moments = this.momentService.getMoments();
     }

@@ -106,7 +106,33 @@ export class SignUpPage {
         });
         let toast = null;
         loading.present();
+
+        if (this.password.length < 6 || this.password.length > 100) {
+            toast = this.toastCtrl.create({
+                message: '密码长度在6--100字符间',
+                duration: 1500,
+                position: 'middle'
+            });
+            loading.dismiss();
+            toast.present();
+            return;
+        }
+
+        // const reg = /^[a-z0-9]+([._\\\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
+        // if (!reg.test(this.email)) {
+        //     toast = this.toastCtrl.create({
+        //         message: '邮箱格式错误',
+        //         duration: 1500,
+        //         position: 'middle'
+        //     });
+        //     loading.dismiss();
+        //     toast.present();
+        //     return;
+        // }
+
+
         this.signUpLoginService.signUp(this.username, this.email, this.password, this.nickname, this.userImage).then((data) => {
+
             if (this.userImage === this.defaultImage) { // 使用了默认头像
                 toast = this.toastCtrl.create({
                     message: '注册成功，头像为默认图片',

@@ -21,6 +21,7 @@ export class MomentService {
         this.user = this.userService.getCurrentUser();
         this.observers = [];
 
+        // TODO:建立socket后取消下一行注释
         // this.receiveSocketOn();
 
         return this.requestMoments().then(data => {
@@ -38,6 +39,7 @@ export class MomentService {
     }
 
     requestMoments() {
+        // TODO:改为服务器地址
         return this.http.get('assets/data/moments-mock.json').toPromise().then(data => {
             return data;
         }).catch(err => {

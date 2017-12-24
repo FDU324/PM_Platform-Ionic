@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
-import { StartPage } from "../start/start";
-import { TabsPage } from '../tabs/tabs';
-import { SignUpPage } from "../signUp/signUp";
+import {Component} from '@angular/core';
+import {NavController, NavParams, LoadingController, AlertController} from 'ionic-angular';
+import {StartPage} from "../start/start";
+import {TabsPage} from '../tabs/tabs';
+import {SignUpPage} from "../signUp/signUp";
 
-import { SignUpLoginService } from '../../services/signUp-login.service';
-import { SocketService } from "../../services/socket.service";
+import {SignUpLoginService} from '../../services/signUp-login.service';
+import {SocketService} from "../../services/socket.service";
 
 @Component({
     selector: 'page-login',
@@ -16,14 +16,12 @@ export class LoginPage {
     password: string;
     showPsw: boolean;
 
-    constructor(
-        public navCtrl: NavController,
-        public navParams: NavParams,
-        public alertCtrl: AlertController,
-        public loadingCtrl: LoadingController,
-        public signUpLoginService: SignUpLoginService,
-        public socketService: SocketService,
-    ) {
+    constructor(public navCtrl: NavController,
+                public navParams: NavParams,
+                public alertCtrl: AlertController,
+                public loadingCtrl: LoadingController,
+                public signUpLoginService: SignUpLoginService,
+                public socketService: SocketService,) {
         this.username = this.navParams.get('username') || '';
         this.password = '';
         this.showPsw = false;
@@ -69,6 +67,13 @@ export class LoginPage {
             // }
         }).catch((error) => {
             console.log('LoginPage-onSubmit', error);
+            const alert = this.alertCtrl.create({
+                title: '登录失败',
+                subTitle: '服务器错误，请稍后重试',
+                buttons: ['确定']
+            });
+            loading.dismiss();
+            alert.present();
         });
     }
 

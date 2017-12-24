@@ -1,12 +1,12 @@
-import { Component, ViewChild } from '@angular/core';
-import { NavController, ViewController, NavParams, Content, App, AlertController } from 'ionic-angular';
+import {Component, ViewChild} from '@angular/core';
+import {NavController, ViewController, NavParams, Content, App, AlertController} from 'ionic-angular';
 
-import { User } from '../../models/user';
-import { Session } from '../../models/session';
+import {User} from '../../models/user';
+import {Session} from '../../models/session';
 
-import { TabsPage } from '../tabs/tabs';
+import {TabsPage} from '../tabs/tabs';
 
-import { FriendService } from '../../services/friend.service';
+import {FriendService} from '../../services/friend.service';
 
 
 @Component({
@@ -22,11 +22,11 @@ export class FriendChatPage {
     inputContent: string;
 
     constructor(public navCtrl: NavController,
-        public viewCtrl: ViewController,
-        public alertCtrl: AlertController,
-        public navParams: NavParams,
-        public appCtrl: App,
-        public friendService: FriendService, ) {
+                public viewCtrl: ViewController,
+                public alertCtrl: AlertController,
+                public navParams: NavParams,
+                public appCtrl: App,
+                public friendService: FriendService,) {
         this.session = navParams.get('session');
         this.user = navParams.get('user');
         this.friend = this.session.friend;
@@ -99,10 +99,6 @@ export class FriendChatPage {
     searchMessage() {
 
     }
-
-
-
-
 
 
     showUserDetail(userType: string) {
