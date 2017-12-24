@@ -8,7 +8,7 @@ import {
 import {LoginPage} from '../login/login';
 import {User} from "../../models/user";
 
-import {AccountService} from "../../services/account.service";
+import {SignUpLoginService} from "../../services/signUp-login.service";
 import {ImgService} from "../../services/img.service";
 
 @Component({
@@ -31,7 +31,7 @@ export class SignUpPage {
                 public toastCtrl: ToastController,
                 public alertCtrl: AlertController,
                 public imgService: ImgService,
-                public accountService: AccountService,) {
+                public signUpLoginService: SignUpLoginService,) {
         this.username = '';
         this.email = '';
         this.password = '';
@@ -106,7 +106,7 @@ export class SignUpPage {
         });
         let toast = null;
         loading.present();
-        this.accountService.signUp(this.username, this.email, this.password, this.nickname, this.userImage).then((data) => {
+        this.signUpLoginService.signUp(this.username, this.email, this.password, this.nickname, this.userImage).then((data) => {
             if (this.userImage === this.defaultImage) { // 使用了默认头像
                 toast = this.toastCtrl.create({
                     message: '注册成功，头像为默认图片',

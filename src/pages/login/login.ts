@@ -4,7 +4,7 @@ import { StartPage } from "../start/start";
 import { TabsPage } from '../tabs/tabs';
 import { SignUpPage } from "../signUp/signUp";
 
-import { AccountService } from '../../services/account.service';
+import { SignUpLoginService } from '../../services/signUp-login.service';
 import { SocketService } from "../../services/socket.service";
 
 @Component({
@@ -21,7 +21,7 @@ export class LoginPage {
         public navParams: NavParams,
         public alertCtrl: AlertController,
         public loadingCtrl: LoadingController,
-        public accountService: AccountService,
+        public signUpLoginService: SignUpLoginService,
         public socketService: SocketService,
     ) {
         this.username = this.navParams.get('username') || '';
@@ -40,7 +40,7 @@ export class LoginPage {
 
         loading.present();
 
-        this.accountService.login(this.username, this.password).then((user) => {
+        this.signUpLoginService.login(this.username, this.password).then((user) => {
             loading.dismiss();
             this.navCtrl.setRoot(TabsPage);
             // if (typeof user === 'object') {

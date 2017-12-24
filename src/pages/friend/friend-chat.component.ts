@@ -6,7 +6,6 @@ import { Session } from '../../models/session';
 
 import { TabsPage } from '../tabs/tabs';
 
-import { AccountService } from '../../services/account.service';
 import { FriendService } from '../../services/friend.service';
 
 
@@ -27,7 +26,6 @@ export class FriendChatPage {
         public alertCtrl: AlertController,
         public navParams: NavParams,
         public appCtrl: App,
-        public accountService: AccountService,
         public friendService: FriendService, ) {
         this.session = navParams.get('session');
         this.user = navParams.get('user');

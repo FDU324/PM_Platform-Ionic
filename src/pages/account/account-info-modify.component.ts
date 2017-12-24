@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { User } from '../../models/user';
-import { AccountService } from '../../services/account.service';
+import { AccountService } from '../../services/signUp-login.service';
 
 @Component({
     templateUrl: 'account-info-modify.component.html'
@@ -11,8 +11,7 @@ export class AccountInfoModify {
 
     constructor(
         public navParams: NavParams,
-        public navCtrl: NavController,
-        public accountService: AccountService) {
+        public navCtrl: NavController,) {
         this.user = navParams.get('user');
     }
 

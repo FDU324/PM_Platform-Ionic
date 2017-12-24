@@ -1,8 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Session } from '../models/session';
-import { User } from '../models/user';
-import { Message } from '../models/message';
-import { SocketService } from './socket.service';
+import {Injectable} from '@angular/core';
+
+import {Session} from '../models/session';
+import {User} from '../models/user';
+import {Message} from '../models/message';
+
+import {SocketService} from './socket.service';
 import {MomentService} from "./moment.service";
 
 @Injectable()
@@ -13,12 +15,12 @@ export class FriendService {
     friendReqList: User[];
 
     constructor(public socketService: SocketService,
-                public momentService:MomentService,) {
+                public momentService: MomentService,) {
         this.sessions = this.mockSessions();
         this.observers = [];
         this.friendRequestsNum = 1;
         this.friendReqList = [
-            new User('newOne', '123@me.com','新来的', 'assets/icon/favicon.ico'),
+            new User('newOne', '123@me.com', '新来的', 'assets/icon/favicon.ico'),
         ];
     }
 
@@ -43,7 +45,7 @@ export class FriendService {
         this.socketService.getSocket().on('friendReqAssent', (user) => {
             console.log(JSON.parse(user).nickname, '同意了请求');
 
-            const session = new Session(JSON.parse(user), [],0);
+            const session = new Session(JSON.parse(user), [], 0);
             this.sessions.unshift(session);
             this.updatePages();
             // this.momentService.updateMoment(true);
@@ -53,8 +55,8 @@ export class FriendService {
 
     mockSessions(): Session[] {
         const ret: Session[] = [];
-        const friend1 = new User('oneTest', '123@me.com','一号测试员', 'assets/icon/favicon.ico');
-        const friend2 = new User('twoTest', '123@me.com','二号测试员', 'assets/icon/favicon.ico');
+        const friend1 = new User('oneTest', '123@me.com', '一号测试员', 'assets/icon/favicon.ico');
+        const friend2 = new User('twoTest', '123@me.com', '二号测试员', 'assets/icon/favicon.ico');
 
         const message1: Message[] = [];
         const message2: Message[] = [];

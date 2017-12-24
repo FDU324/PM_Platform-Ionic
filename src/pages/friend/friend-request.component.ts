@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, App } from 'ionic-angular';
 import { User } from '../../models/user';
-import { AccountService } from '../../services/account.service';
 import { FriendService } from '../../services/friend.service';
+import {UserService} from "../../services/user.service";
 
 
 @Component({
@@ -10,14 +10,14 @@ import { FriendService } from '../../services/friend.service';
 })
 
 export class FriendRequestPage {
-    user: User;        
+    user: User;
     friendRequests: User[];
 
     constructor(public navCtrl: NavController,
-        public accountService: AccountService,
+        public userService: UserService,
         public friendService: FriendService,
     ) {
-        this.user = this.accountService.getCurrentUser();
+        this.user = this.userService.getCurrentUser();
         this.friendRequests = this.friendService.getFriendRequests();
     }
 

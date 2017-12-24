@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { NavController, App } from 'ionic-angular';
-import { User } from '../../models/user';
-import { AccountService } from '../../services/account.service';
-import { AccountInfoModify } from './account-info-modify.component';
+import {Component} from '@angular/core';
+import {NavController, App} from 'ionic-angular';
+import {User} from '../../models/user';
+import {AccountInfoModify} from './account-info-modify.component';
+import {UserService} from "../../services/user.service";
 
 @Component({
     selector: 'page-account-tab',
@@ -11,11 +11,10 @@ import { AccountInfoModify } from './account-info-modify.component';
 export class AccountTabPage {
     user: User;
 
-    constructor(
-        public navCtrl: NavController,
-        public appCtrl: App,
-        public accountService: AccountService) {
-        this.user = this.accountService.getCurrentUser();
+    constructor(public navCtrl: NavController,
+                public appCtrl: App,
+                public userService: UserService) {
+        this.user = this.userService.getCurrentUser();
     }
 
     modifyInfo() {
@@ -36,9 +35,6 @@ export class AccountTabPage {
     latestActivity() {
 
     }
-
-
-
 
 
 }
