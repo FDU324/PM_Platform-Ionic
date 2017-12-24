@@ -6,6 +6,7 @@ import {
 } from 'ionic-angular';
 
 import {LoginPage} from '../login/login';
+
 import {User} from "../../models/user";
 
 import {SignUpLoginService} from "../../services/signUp-login.service";

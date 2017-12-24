@@ -1,11 +1,12 @@
 import {Component} from '@angular/core';
 import {NavController, NavParams} from 'ionic-angular';
+
 import {User} from '../../models/user';
 
 @Component({
     templateUrl: 'account-info-modify.component.html'
 })
-export class AccountInfoModify {
+export class AccountInfoModifyPage {
     user: User;
 
     constructor(public navParams: NavParams,
@@ -18,6 +19,10 @@ export class AccountInfoModify {
     }
 
     modifyNickName() {
+
+    }
+
+    save() {
 
     }
 

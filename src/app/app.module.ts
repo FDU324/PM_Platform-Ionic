@@ -50,7 +50,7 @@ import {MomentTabPage} from '../pages/moment/moment-tab.component';
   Account Part
 */
 import {AccountTabPage} from '../pages/account/account-tab.component';
-import {AccountInfoModify} from '../pages/account/account-info-modify.component';
+import {AccountInfoModifyPage} from '../pages/account/account-info-modify.component';
 
 /**
  * Services & Pipe
@@ -81,7 +81,7 @@ import {MyDatePipe} from './my-date.pipe';
         ShopTabPage,
         MomentTabPage,
         AccountTabPage,
-        AccountInfoModify,
+        AccountInfoModifyPage,
         ItemPage,
         SearchGamePage
     ],
@@ -106,7 +106,7 @@ import {MyDatePipe} from './my-date.pipe';
         ShopTabPage,
         MomentTabPage,
         AccountTabPage,
-        AccountInfoModify,
+        AccountInfoModifyPage,
         ItemPage,
         SearchGamePage
     ],
