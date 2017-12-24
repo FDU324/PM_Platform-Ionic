@@ -14,8 +14,14 @@
             </ion-item>
 
             <ion-item>
-                <ion-label floating>密码</ion-label>
-                <ion-input [type]="showPsw? 'text' : 'password'" name="password" [(ngModel)]="password" required></ion-input>
+                <ion-label floating>邮箱</ion-label>
+                <ion-input type="email" name="email" [(ngModel)]='email' required></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label floating>密码(6--100字符)</ion-label>
+                <ion-input name="password" [type]="showPsw? 'text' : 'password'" [(ngModel)]="password"
+                           required></ion-input>
                 <button type="button" ion-button clear item-right (click)="changeShowPsw()">
                     <ion-icon [name]="showPsw? 'eye' : 'eye-off'"></ion-icon>
                 </button>

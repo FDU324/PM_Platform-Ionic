@@ -48,7 +48,7 @@ export class SocketService {
         });
     }
 
-    emitPromise(command, data) {
+     emitPromise(command, data) {
         return new Promise<any>((resolve, reject) => {
             this.socket.emit(command, data, (response) => {
                 if (typeof response === 'object') {

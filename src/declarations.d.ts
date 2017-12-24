@@ -1,4 +1,4 @@
 declare module '*';
 
 declare const io: any;
-declare var startApp: any;
+declare const startApp: any;

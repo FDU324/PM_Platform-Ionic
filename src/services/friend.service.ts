@@ -3,6 +3,7 @@ import { Session } from '../models/session';
 import { User } from '../models/user';
 import { Message } from '../models/message';
 import { SocketService } from './socket.service';
+import {MomentService} from "./moment.service";
 
 @Injectable()
 export class FriendService {
@@ -11,19 +12,49 @@ export class FriendService {
     friendRequestsNum: number;
     friendReqList: User[];
 
-    constructor(public socketService: SocketService) {
+    constructor(public socketService: SocketService,
+                public momentService:MomentService,) {
         this.sessions = this.mockSessions();
         this.observers = [];
         this.friendRequestsNum = 1;
         this.friendReqList = [
-            new User('newOne', '新来的', 'assets/icon/favicon.ico'),
+            new User('newOne', '123@me.com','新来的', 'assets/icon/favicon.ico'),
         ];
     }
 
+    updateAfterLogin() {
+        this.observers = [];
+
+        // TODO: read from localStorage
+        this.sessions = [];
+        this.friendRequestsNum = 0;
+        this.friendReqList = [];
+
+        this.receiveSocketOn();
+    }
+
+    receiveSocketOn() {
+        this.socketService.getSocket().on('receiveFriendReq', (user) => {
+            this.friendReqList.push(JSON.parse(user));
+            this.friendRequestsNum++;
+            this.updatePages();
+        });
+
+        this.socketService.getSocket().on('friendReqAssent', (user) => {
+            console.log(JSON.parse(user).nickname, '同意了请求');
+
+            const session = new Session(JSON.parse(user), [],0);
+            this.sessions.unshift(session);
+            this.updatePages();
+            // this.momentService.updateMoment(true);
+        })
+    }
+
+
     mockSessions(): Session[] {
         const ret: Session[] = [];
-        const friend1 = new User('oneTest', '一号测试员', 'assets/icon/favicon.ico');
-        const friend2 = new User('twoTest', '二号测试员', 'assets/icon/favicon.ico');
+        const friend1 = new User('oneTest', '123@me.com','一号测试员', 'assets/icon/favicon.ico');
+        const friend2 = new User('twoTest', '123@me.com','二号测试员', 'assets/icon/favicon.ico');
 
         const message1: Message[] = [];
         const message2: Message[] = [];

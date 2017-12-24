@@ -22,16 +22,16 @@ export class GameTabPage {
     ) {
         this.gameService.getGameList().then(data => {
             this.gameList = data;
-            for (let game of this.gameList) {
-                let sApp = startApp.set({
-                    "package": game.packageName,
-                });
-                sApp.check(function(values) {
-                    game.downloadText = "打开";
-                }, function(error) {
-                    game.downloadText = "下载";
-                });
-            }
+            // for (let game of this.gameList) {
+            //     let sApp = startApp.set({
+            //         "package": game.packageName,
+            //     });
+            //     sApp.check(function(values) {
+            //         game.downloadText = "打开";
+            //     }, function(error) {
+            //         game.downloadText = "下载";
+            //     });
+            // }
         });
         this.showSearchBar = false;
     }
@@ -50,9 +50,9 @@ export class GameTabPage {
                 console.log(error);
             });
         } else {
-            var file = new File();
-            var fileTransfer = new FileTransfer().create();
-            var uri = encodeURI(game.downloadLink);
+            const file = new File();
+            const fileTransfer = new FileTransfer().create();
+            const uri = encodeURI(game.downloadLink);
 
             let loading = this.loadingCtrl.create({
                 content: '下载进度：0%'
@@ -79,7 +79,7 @@ export class GameTabPage {
                     clearInterval(timer);
                 }
                 loading.dismiss();
-                var fileOpener = new FileOpener();
+                const fileOpener = new FileOpener();
                 fileOpener.open(entry.toURL(), 'application/vnd.android.package-archive')
                     .then(() => console.log('File is opened'))
                     .catch(e => console.log('Error opening file', e));

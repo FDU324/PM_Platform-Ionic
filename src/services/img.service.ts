@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ImagePicker} from '@ionic-native/image-picker';
 import {Camera, CameraOptions} from '@ionic-native/camera';
 import {FileTransfer, FileUploadOptions, FileTransferObject} from '@ionic-native/file-transfer';
+import {User} from "../models/user";
 
 @Injectable()
 export class ImgService {
@@ -123,7 +124,7 @@ export class ImgService {
      * @param url:文件的url
      * @param type:"userimage"表示用作头像,"moment"表示用作动态
      */
-    sendFile(user, url, type) {
+    sendFile(user: User, url: string, type: string) {
         const fileTransfer: FileTransferObject = this.transfer.create();
         const dest = "http://120.25.238.161:3000/upload/uploadImg.json";
         const options = {
@@ -133,23 +134,22 @@ export class ImgService {
         const op: FileUploadOptions = {
             params: options,
         };
-        return fileTransfer.upload(url, dest, op)
-            .then((data) => {
-                //var resp = JSON.parse(data.response);
-                if (data.responseCode == 200) {
-                    const resp = JSON.parse(data.response);
-                    const newURL: string = resp.url;
-                    return Promise.resolve(newURL);
-                }
-                return Promise.resolve('error');
-            }).catch((error) => {
-                console.log('ImgService-sendFile', error);
-                return Promise.resolve('error');
-            });
+        return fileTransfer.upload(url, dest, op).then((data) => {
+            //var resp = JSON.parse(data.response);
+            if (data.responseCode == 200) {
+                const resp = JSON.parse(data.response);
+                const newURL: string = resp.url;
+                return Promise.resolve(newURL);
+            }
+            return Promise.reject('error');
+        }).catch((error) => {
+            console.log('ImgService-sendFile', error);
+            return Promise.reject('error');
+        });
 
     }
 
-    modifyImageAtSignup(username: string, imageUrl: string) {
+    modifyImageAtSignUp(username: string, imageUrl: string) {
         let url = 'http://120.25.238.161:3000/user/modifyUserImage';
         let info = {
             username: username,
@@ -162,10 +162,10 @@ export class ImgService {
             if (res === 'success') {
                 return Promise.resolve('success');
             }
-            return Promise.resolve('error');
+            return Promise.reject('error');
         }).catch(err => {
             console.log('ImgService-modifyImageAtSignup', err);
-            return Promise.resolve('error');
+            return Promise.reject('error');
         });
 
         // return this.http.put(url, JSON.stringify(info), {
