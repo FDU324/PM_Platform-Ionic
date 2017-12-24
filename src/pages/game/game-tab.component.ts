@@ -88,7 +88,7 @@ export class GameTabPage {
             //     }
             // }, 300);
 
-            fileTransfer.download(uri, file.externalApplicationStorageDirectory+"/apk/"+game.name+".apk").then((entry) => {
+            fileTransfer.download(uri, file.externalApplicationStorageDirectory+"/apk/game.apk").then((entry) => {
                 console.log('download complete: ' + entry.toURL());
                 game.downloading = false;
                 var fileOpener = new FileOpener();
