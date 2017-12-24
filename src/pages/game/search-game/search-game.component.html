@@ -10,19 +10,28 @@
 
     <ion-grid *ngFor="let game of gameList">
         <ion-row>
-            <ion-col col-3>{{game.icon}}</ion-col>
+            <ion-col col-3>
+                <img src="{{game.icon}}" alt="{{game.name}}" width="50px" height="50px">
+            </ion-col>
             <ion-col col-9>{{game.name}}</ion-col>
         </ion-row>
         <ion-row>
-            <ion-col col-12>{{game.image}}</ion-col>
+            <ion-col col-12>
+                <img src="{{game.image}}" alt="{{game.name}}">
+            </ion-col>
         </ion-row>
         <ion-row>
             <ion-col col-12>{{game.description}}</ion-col>
         </ion-row>
         <ion-row>
-            <ion-col col-3>{{game.category}}</ion-col>
-            <ion-col offset-3 (click)="downloadGame(game)">{{game.downloadText}}</ion-col>
+            <ion-col col-5>分类：{{game.category}}</ion-col>
+            <ion-col offset-5 (click)="downloadGame(game)">{{game.downloadText}}</ion-col>
         </ion-row>
     </ion-grid>
+
+    <div *ngIf="isEmpty" style="text-align: center;line-height: 200px;height: 200px">
+        <ion-icon name="jet"></ion-icon>
+        抱歉，没有搜到该游戏
+    </div>
 
 </ion-content>

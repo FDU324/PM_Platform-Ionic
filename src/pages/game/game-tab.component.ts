@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
 import { FileOpener } from '@ionic-native/file-opener';
-import {NavController, LoadingController} from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
 import { GameService } from "../../services/game.service";
 import { AccountService } from "../../services/account.service";
 import { SearchGamePage } from "./search-game/search-game.component";
+import { Game } from "../../models/game";
 
 import {util} from 'util';
 
@@ -15,11 +16,11 @@ import {util} from 'util';
 })
 
 export class GameTabPage {
-    gameList: any[];
+    gameList: Game[];
     showSearchBar: boolean;
     username: string;
     nickname: string;
-    
+
 
     constructor(
         public navCtrl: NavController,
@@ -29,18 +30,6 @@ export class GameTabPage {
     ) {
         this.gameService.getGameList().then(data => {
             this.gameList = data;
-            for (let game of this.gameList) {
-                game.downloading = false;
-                game.loadPercent = 0;
-                startApp.set({
-                    "package": game.packageName,
-                }).check((values) => {
-                    game.startText = "打开";
-                }, (error) => {
-                    game.startText = "下载";
-                });
-            }
-            
         });
         let currentUser = this.accountService.getCurrentUser();
         this.username = currentUser.username;
@@ -73,14 +62,14 @@ export class GameTabPage {
             const fileTransfer = new FileTransfer().create();
             const uri = encodeURI(game.downloadLink);
 
-           
+
             game.downloading = true;
             fileTransfer.onProgress((progressEvent: ProgressEvent) =>{
                 if (progressEvent.lengthComputable) {
-                   game.loadPersent = progressEvent.loaded / progressEvent.total * 100;
+                   game.loadPercent = progressEvent.loaded / progressEvent.total * 100;
                 }
             });
-            
+
             // let timer = setInterval(() => {
             //     game.loadPercent += 1;
             //     if (game.loadPercent >= 100) {
@@ -108,16 +97,19 @@ export class GameTabPage {
     }
 
     searchGame(ev: any) {
-        // set val to the value of the searchbar
         let val = ev.target.value;
 
-        // if the value is an empty string don't filter the items
         if (val && val.trim() != '') {
-            console.log(val);
             this.toggleSearchBar();
+            let searchResult = this.gameList.filter(game => {
+                return game.name.indexOf(val) !== -1;
+            });
+
+            console.log(JSON.stringify(searchResult));
+
             this.navCtrl.push(SearchGamePage, {
                 title: val,
-                gameList: this.gameList
+                gameList: searchResult
             })
         }
     }

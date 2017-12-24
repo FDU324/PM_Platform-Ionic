@@ -15,7 +15,7 @@
 <ion-content padding>
 
     <ion-grid *ngFor="let game of gameList" style="height:140px;border-bottom:medium solid #d0d0d0">
-            
+
         <ion-row>
             <ion-col col-4><img [src]="game.icon" style="width:100%;height:100%;"/></ion-col>
             <ion-col col-8>
@@ -42,9 +42,25 @@
                     </ion-col>
                 </ion-row>
             </ion-col>
+            <!--<ion-col col-3>-->
+                <!--<img src="{{game.icon}}" alt="{{game.name}}" width="50px" height="50px">-->
+            <!--</ion-col>-->
+            <!--<ion-col col-9 style="line-height: 50px; font-size: 20px">{{game.name}}</ion-col>-->
+        <!--</ion-row>-->
+        <!--<ion-row>-->
+            <!--<ion-col col-12>-->
+                <!--<img src="{{game.image}}" alt="{{game.name}}">-->
+            <!--</ion-col>-->
+        <!--</ion-row>-->
+        <!--<ion-row>-->
+            <!--<ion-col col-12>{{game.description}}</ion-col>-->
+        <!--</ion-row>-->
+        <!--<ion-row>-->
+            <!--<ion-col col-5>分类：{{game.category}}</ion-col>-->
+            <!--<ion-col offset-5 (click)="downloadGame(game)">{{game.downloadText}}</ion-col>-->
         </ion-row>
-        
-        
+
+
     </ion-grid>
 
 </ion-content>

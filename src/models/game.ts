@@ -10,6 +10,7 @@ export class Game {
         public description: string,
         public category: string,
         public downloadLink: string,
-        public packageName: string) {
+        public packageName: string,
+        public downloadText: string) {
     }
 }

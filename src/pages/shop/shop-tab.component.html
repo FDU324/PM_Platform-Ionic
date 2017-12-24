@@ -10,8 +10,10 @@
 
     <ion-grid *ngFor="let game of gameList">
         <ion-row (click)="selectGame(game.id)">
-            <ion-col col-3>{{game.icon}}</ion-col>
-            <ion-col col-9>{{game.name}}</ion-col>
+            <ion-col col-3>
+                <img src="{{game.icon}}" alt="{{game.name}}" width="50px" height="50px">
+            </ion-col>
+            <ion-col col-9 style="line-height: 50px; font-size: 20px">{{game.name}}</ion-col>
         </ion-row>
     </ion-grid>
 

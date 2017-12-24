@@ -13,6 +13,7 @@ import { GameService } from "../../../services/game.service";
 export class SearchGamePage {
     gameList: any[];
     title: string;
+    isEmpty: boolean;
 
     constructor(
         public navCtrl: NavController,
@@ -22,6 +23,7 @@ export class SearchGamePage {
     ) {
         this.title = this.navParams.data.title;
         this.gameList = this.navParams.data.gameList;
+        this.isEmpty = JSON.stringify(this.gameList) === '[]';
     }
 
     downloadGame(game) {
