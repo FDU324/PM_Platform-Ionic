@@ -38,12 +38,34 @@ socket.emit('login', username, () => {});
 socket.on('login', (username, func) => {
     
     // 处理离线信息等，最后调用func回调
+    // 将username和socket添加到map中
 
     func({
         success: true,
         data: 'success'
     });
 });
+
+
+---
+
+注销操作
+前端
+socket.emit('logout', username, () => {});
+
+后端处理
+socket.on('logout', (username, func) => {
+    
+    // 处理离线信息等，最后调用func回调
+    // 将username和socket从map中删除
+
+    func({
+        success: true,
+        data: 'success'
+    });
+});
+
+
 
 ```
 
@@ -118,57 +140,28 @@ socket.on('sendMessage', (data, func) => {
 
 
 2. 添加好友
-前端
-const sendData = {
+前端Post请求
+参数：const body = {
     myUsername: myUsername,
     friendUsername: friendUsername
 };
+返回  friendUsername对应的所有user信息
+{
+    username: ,
+    email: ,
+    nickname: ,
+}
 
-socket.emit('friendReq', JSON.stringify(sendData), () => {});
 
-后端处理
-socket.on('friendReq', (data, func) => {
-    // 处理
-
-    const user = {
-        username: ,
-        email: ,
-        nickname: ,
-        userImage: ,     
-    };
-    socket.emit('receiveFriendReq', JSON.stringify(user)); 
-    
-    func({
-        success: true,
-        data: 'success'
-    });
-});
-
-3. 接受好友请求
-const sendData = {
-    myUsername: myUsername,
-    friendUsername: friendUsername
+后端还要向对应好友emit发起请求的这个用户的信息
+const user = {
+    username: ,
+    email: ,
+    nickname: ,   
 };
+socket.emit('newFriend', JSON.stringify(user)); 
 
-socket.emit('acceptFriendReq', JSON.stringify(sendData), () => {});
 
-后端
-socket.on('acceptFriendReq', (data, func) => {
-    // 处理
-
-    const user = {
-        username: ,
-        email: ,
-        nickname: ,
-        userImage: ,     
-    };
-    socket.emit('friendReqAssent', JSON.stringify(user)); 
-    
-    func({
-        success: true,
-        data: 'success'
-    });
-});
 
 
 ```
@@ -178,8 +171,20 @@ socket.on('acceptFriendReq', (data, func) => {
 ### 动态
 - 获取当前用户所有可见动态， get请求
   - /getMoments?username=
-  - 返回值: 待定
+  - 返回值: 是一个list，里面每个元素有用户信息，时间戳和图片的url
 
+  
+```js
+[{
+    user: {
+        username:,
+        email:,
+        nickname:,
+    },
+    time: ,
+    image: ,
+}]
+```
 
 
 ### 商城
