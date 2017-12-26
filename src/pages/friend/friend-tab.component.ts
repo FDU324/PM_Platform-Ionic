@@ -28,6 +28,18 @@ export class FriendTabPage {
         this.friendRequests = this.friendService.getFriendRequests();
     }
 
+    ionViewDidEnter() {
+        this.friendService.registerPage(this);
+    }
+
+    ionViewDidLeave() {
+        this.friendService.removePage(this);
+    }
+
+    update() {
+        this.sessions = this.friendService.getSessions();
+    }
+
     chat(session: Session) {
         this.appCtrl.getRootNav().push(FriendChatPage, {
             user: this.user,
@@ -41,9 +53,19 @@ export class FriendTabPage {
         });
     }
 
-    seeFriendRequests() {
-        this.friendService.clearFriendRequests();
-        this.appCtrl.getRootNav().push(FriendRequestPage);
+    searchFriends(ev) {
+        // Reset items back to all of the items
+        this.sessions = this.friendService.getSessions();
+
+        // set val to the value of the ev target
+        const val = ev.target.value;
+
+        // if the value is an empty string don't filter the items
+        if (val && val.trim() != '') {
+            this.sessions = this.sessions.filter(session => {
+                return session.friend.nickname.toLocaleLowerCase().indexOf(val.toLocaleLowerCase()) > -1;
+            });
+        }
     }
 
 

@@ -12,12 +12,7 @@
 </ion-header>
 
 <ion-content>
-    <!-- <ion-searchbar (ionInput)="searchFriends($event)"></ion-searchbar> -->
-    <button ion-item block="true" color="light" *ngIf="friendRequests.length>0" (click)="seeFriendRequests()">
-        新的朋友
-        <ion-badge item-right color="danger">{{friendRequests.length}}</ion-badge>
-    </button>
-
+    <ion-searchbar placeholder="搜索朋友" (ionInput)="searchFriends($event)"></ion-searchbar>
     <ion-list>
         <button ion-item *ngFor="let session of sessions" (click)="chat(session)">
             <ion-avatar item-start>

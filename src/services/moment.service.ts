@@ -25,26 +25,34 @@ export class MomentService {
         // this.receiveSocketOn();
 
         return this.requestMoments().then(data => {
-            console.log(data);
-            this.moments = JSON.parse(JSON.stringify(data));
         }).catch(err => {
-            console.log('MomentService err' + err);
         });
     }
 
     receiveSocketOn() {
-        this.socketService.getSocket().on('receiveMoment', (data) => {
-            this.moments = JSON.parse(JSON.stringify(data));
+        this.socketService.getSocket().on('newReport', (data) => {
+            this.requestMoments().then(data => {
+                this.update();
+            }).catch(err => {
+            });
         });
     }
 
     requestMoments() {
         // TODO:改为服务器地址
-        return this.http.get('assets/data/moments-mock.json').toPromise().then(data => {
-            return data;
+        return this.http.get('http://localhost:1337/userdata/getMoments?username='+this.user.username, {responseType: 'text'}).toPromise().then(data => {
+            if (data === 'fail') {
+                return Promise.reject('error');
+            }
+
+            this.moments = JSON.parse(data).map(i => {
+                return new Moment(i['user'], i['time'], i['image'], '坦克大战');
+            });
+
+            return Promise.resolve('success');
         }).catch(err => {
-            console.log('getGameList error');
-            return this.moments;
+            console.log('getGameList error:' + err);
+            return Promise.reject('error');
         });
     }
 

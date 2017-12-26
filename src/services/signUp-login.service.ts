@@ -26,6 +26,11 @@ export class SignUpLoginService {
             password: password,
         };
 
+        // const friend2 = new User('测试登录', '123@me.com', '测试登录', 'assets/icon/favicon.ico');
+        // this.userService.setCurrentUser(friend2);
+        // this.momentService.updateAfterLogin();
+        // return Promise.resolve(friend2);
+
         return this.http.post('http://localhost:1337/user/login', body, {responseType: 'text'}).toPromise().then(data => {
             if (data === 'fail') {
                 return Promise.reject('fail');

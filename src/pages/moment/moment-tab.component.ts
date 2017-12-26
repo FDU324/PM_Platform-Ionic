@@ -1,10 +1,13 @@
 import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import {App, NavController} from 'ionic-angular';
 
 import {User} from "../../models/user";
 import {Moment} from "../../models/moment";
+
 import {MomentService} from "../../services/moment.service";
 import {UserService} from "../../services/user.service";
+
+import {ImageViewer} from "./image-viewer.component";
 
 @Component({
     selector: 'page-moment-tab',
@@ -15,6 +18,7 @@ export class MomentTabPage {
     moments: Moment[];
 
     constructor(public navCtrl: NavController,
+                public appCtrl:App,
                 public userService: UserService,
                 public momentService: MomentService) {
         this.user = this.userService.getCurrentUser();
@@ -31,6 +35,12 @@ export class MomentTabPage {
 
     update() {
         this.moments = this.momentService.getMoments();
+    }
+
+    viewImage(moment: Moment) {
+        this.appCtrl.getRootNav().push(ImageViewer, {
+            images: moment.image,
+        });
     }
 
 
