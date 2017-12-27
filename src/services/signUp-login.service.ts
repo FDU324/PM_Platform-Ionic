@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import { format } from 'util';
 
 import {User} from '../models/user';
 
@@ -9,6 +10,8 @@ import {SocketService} from "./socket.service";
 import {FriendService} from "./friend.service";
 import {MomentService} from "./moment.service";
 import {UserService} from "./user.service";
+
+
 
 @Injectable()
 export class SignUpLoginService {
@@ -37,7 +40,8 @@ export class SignUpLoginService {
             }
 
             const dataJson = JSON.parse(data);
-            const user = new User(dataJson['Username'], dataJson['PrivateInfo']['Email'], dataJson['TitleInfo']['DisplayName'], 'assets/icon/favicon.ico');
+            const userImage = format("http://120.25.238.161/PM/platform/userImg/%s.jpg", Math.floor(Math.random()*10));
+            const user = new User(dataJson['Username'], dataJson['PrivateInfo']['Email'], dataJson['TitleInfo']['DisplayName'], userImage);
 
             const updateAll = [
                 this.userService.setCurrentUser(user),

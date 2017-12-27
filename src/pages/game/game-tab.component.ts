@@ -8,7 +8,7 @@ import { AccountService } from "../../services/account.service";
 import { SearchGamePage } from "./search-game/search-game.component";
 import { Game } from "../../models/game";
 
-import {util} from 'util';
+import {format} from 'util';
 import {UserService} from "../../services/user.service";
 
 @Component({
@@ -49,7 +49,7 @@ export class GameTabPage {
         if (game.startText === "打开") {
             let sApp = startApp.set({
                 "action": "ACTION_VIEW",
-                "uri": util.format(game.uri, this.username, this.nickname)
+                "uri": format(game.uri, this.username, this.nickname)
             });
 
             sApp.start(() => { /* success */
