@@ -18,7 +18,7 @@ export class MomentTabPage {
     moments: Moment[];
 
     constructor(public navCtrl: NavController,
-                public appCtrl:App,
+                public appCtrl: App,
                 public userService: UserService,
                 public momentService: MomentService) {
         this.user = this.userService.getCurrentUser();
@@ -39,7 +39,7 @@ export class MomentTabPage {
 
     viewImage(moment: Moment) {
         this.appCtrl.getRootNav().push(ImageViewer, {
-            images: moment.image,
+            image: moment.image,
         });
     }
 

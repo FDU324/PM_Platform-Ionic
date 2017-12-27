@@ -12,7 +12,6 @@ import {NavParams, App} from 'ionic-angular';
     `,
 })
 
-
 export class ImageViewer {
     image: string;
 

@@ -20,7 +20,7 @@ export class SocketService {
     }
 
     socketConnect() {
-        this.socket = io('http://120.25.238.161:3000', {'force new connection': true});
+        this.socket = io('http://localhost:8790', {'force new connection': true});
         this.socket.on('connect', () => {
             console.log('client_connects_success');
         });

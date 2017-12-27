@@ -13,6 +13,8 @@ export class FriendService {
     sessions: Session[];
     observers: any[];
     friendReqList: User[];
+    newMessageCount: number;
+
 
     constructor(public socketService: SocketService,
                 public momentService: MomentService,
@@ -29,6 +31,7 @@ export class FriendService {
 
         this.sessions = [];
         this.friendReqList = [];
+        this.newMessageCount = 0;
 
         this.receiveSocketOn();
     }
@@ -48,9 +51,13 @@ export class FriendService {
             session.messages.unshift(new Message('receive', 'text', data.content, data.time));
             session.newMessageCount++;
             this.updatePages();
+            this.newMessageCount++;
         });
     }
 
+    getTotalNewMessageCount(): number {
+        return this.newMessageCount;
+    }
 
     mockSessions(): Session[] {
         const ret: Session[] = [];
