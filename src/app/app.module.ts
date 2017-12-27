@@ -46,6 +46,7 @@ import {ItemPage} from '../pages/shop/item/item.component';
   Moment Part
 */
 import {MomentTabPage} from '../pages/moment/moment-tab.component';
+import {ImageViewer} from '../pages/moment/image-viewer.component';
 /*
   Account Part
 */
@@ -80,6 +81,7 @@ import {MyDatePipe} from './my-date.pipe';
         FriendRequestPage,
         ShopTabPage,
         MomentTabPage,
+        ImageViewer,
         AccountTabPage,
         AccountInfoModifyPage,
         ItemPage,
@@ -105,6 +107,7 @@ import {MyDatePipe} from './my-date.pipe';
         FriendRequestPage,
         ShopTabPage,
         MomentTabPage,
+        ImageViewer,
         AccountTabPage,
         AccountInfoModifyPage,
         ItemPage,

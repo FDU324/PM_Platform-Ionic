@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
 
 import {Session} from '../models/session';
 import {User} from '../models/user';
@@ -11,14 +12,15 @@ import {MomentService} from "./moment.service";
 export class FriendService {
     sessions: Session[];
     observers: any[];
-    friendRequestsNum: number;
     friendReqList: User[];
+    newMessageCount: number;
+
 
     constructor(public socketService: SocketService,
-                public momentService: MomentService,) {
+                public momentService: MomentService,
+                public http: HttpClient) {
         this.sessions = this.mockSessions();
         this.observers = [];
-        this.friendRequestsNum = 1;
         this.friendReqList = [
             new User('newOne', '123@me.com', '新来的', 'assets/icon/favicon.ico'),
         ];
@@ -27,31 +29,35 @@ export class FriendService {
     updateAfterLogin() {
         this.observers = [];
 
-        // TODO: read from localStorage
         this.sessions = [];
-        this.friendRequestsNum = 0;
         this.friendReqList = [];
+        this.newMessageCount = 0;
 
         this.receiveSocketOn();
     }
 
     receiveSocketOn() {
-        this.socketService.getSocket().on('receiveFriendReq', (user) => {
-            this.friendReqList.push(JSON.parse(user));
-            this.friendRequestsNum++;
-            this.updatePages();
-        });
-
-        this.socketService.getSocket().on('friendReqAssent', (user) => {
-            console.log(JSON.parse(user).nickname, '同意了请求');
-
+        this.socketService.getSocket().on('newFriend', (user) => {
             const session = new Session(JSON.parse(user), [], 0);
             this.sessions.unshift(session);
             this.updatePages();
             // this.momentService.updateMoment(true);
-        })
+        });
+
+        this.socketService.getSocket().on('newMessage', (messageStr) => {
+            const data = JSON.parse(messageStr);
+
+            const session = this.sessions.find(session => session.friend.username === data.username);
+            session.messages.unshift(new Message('receive', 'text', data.content, data.time));
+            session.newMessageCount++;
+            this.updatePages();
+            this.newMessageCount++;
+        });
     }
 
+    getTotalNewMessageCount(): number {
+        return this.newMessageCount;
+    }
 
     mockSessions(): Session[] {
         const ret: Session[] = [];
@@ -97,12 +103,12 @@ export class FriendService {
     }
 
     sendMessage(user: User, friend: User, type: string, content) {
-        let message = new Message('me', type, content, Date.now());
+        const message = new Message('send', type, content, Date.now());
 
         //console.log(content);
         //console.log(this.sessionList);
         //console.log(friend);
-        let sendData = {
+        const sendData = {
             from: user.username,
             to: friend.username,
             message: message
@@ -128,20 +134,75 @@ export class FriendService {
             console.log('SendMessage-error:', error);
             return Promise.resolve<any>('SendMessage-error');
         });
-        //return Promise.resolve(temSession);
     }
 
-    searchUser(currentUser: string, searchUser: string) {
+    addFriend(myUsername: string, friendUsername: string) {
+        const body = {
+            myUsername: myUsername,
+            friendUsername: friendUsername
+        };
+        const friend2 = new User('测试添加', '123@me.com', '测试添加', 'assets/icon/favicon.ico');
+
+        this.sessions.push(new Session(friend2, [new Message('receive', 'text', `测试数据`, Date.now())], 0));
+
         return Promise.resolve('success');
+
+
+        // return this.http.post('http://localhost:1337/friend/addFriend', body, {responseType: 'text'}).toPromise().then(res => {
+        //     if (res === 'fail') {
+        //         return Promise.reject('fail');
+        //     }
+        //
+        //     console.log(res);
+        //     const friend2 = new User('测试添加', '123@me.com', '测试添加', 'assets/icon/favicon.ico');
+        //
+        //     this.sessions.push(new Session(friend2, [], 0));
+        //
+        //     return Promise.resolve('success');
+        //
+        // }).catch(err => {
+        //     console.log('FriendService:' + err);
+        //     return Promise.reject('fail');
+        // });
     }
 
+    searchUser(myUsername: string, friendUsername: string) {
+        // return Promise.resolve('success');
+
+        const url = 'http://120.25.238.161:3000/user/findUser?myUsername=' + myUsername + '&friendUsername=' + friendUsername;
+        return this.http.get(url, {responseType: 'text'}).toPromise().then(res => {
+            if (res === 'success') {
+                // 可以添加
+                const temp = {
+                    myUsername: myUsername,
+                    friendUsername: friendUsername
+                };
+
+                return this.socketService.emitPromise('friendReq', JSON.stringify(temp)).then(data => {
+                    return Promise.resolve('success');
+                });
+            } else if (res === 'friend') {
+                // 已经是好友
+                return Promise.resolve('friend');
+            } else if (res === 'notExist') {
+                // 该好友不存在
+                return Promise.resolve('notExist');
+            } else {
+                // 服务器错误
+                console.log('FriendListService-searchUser:', res);
+                return Promise.reject('FriendListService-searchUser:');
+            }
+
+        }).catch(error => {
+            console.log(error);
+            return Promise.reject('FriendListService-searchUser:');
+        });
+
+
+    }
 
     getFriendRequests(): User[] {
         return this.friendReqList;
-    }
-
-    clearFriendRequests() {
-        this.friendRequestsNum = 0;
     }
 
     acceptRequest(currentUser: string, searchUser: string) {

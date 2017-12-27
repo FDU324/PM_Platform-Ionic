@@ -1,13 +1,9 @@
 import {User} from "./user";
-import {Game} from "./game";
 
 export class Moment {
-    constructor(
-        public id: string,
-        public user: User,
-        public game: Game,
-        public time: number,
-        public title: string,
-        public image: string, ) {
+    constructor(public user: User,
+                public time: number,
+                public image: string,
+                public game: string,) {
     }
 }

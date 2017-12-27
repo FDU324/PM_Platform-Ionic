@@ -1,50 +1,22 @@
 [
     {
-        "id": 1,
         "user": {
             "username": "test1",
             "email": "test1@test.cn",
             "nickname": "test1",
             "userImage": "assets/icon/favicon.ico"
-        },
-        "game": {
-            "id": 0,
-            "name": "坦克大战",
-            "icon": "icon",
-            "image": "image",
-            "description": "新奇的双人合作坦克手游",
-            "category": "射击",
-            "downloadLink": "http://120.25.238.161/test.apk",
-            "packageName": "com.FDU.TANK",
-            "downloadText": "test",
-            "uri": "tank://TANK.FDU.com/launch?username="
         },
         "time": 1514119890182,
-        "title": "嗨皮打坦克",
-        "image": "assets/icon/favicon.ico"
+        "image": "http://120.25.238.161/PM/tank/record-images/Record_wzh123_1514215338888.png"
     },
     {
-        "id": 2,
         "user": {
             "username": "test1",
             "email": "test1@test.cn",
             "nickname": "test1",
             "userImage": "assets/icon/favicon.ico"
         },
-        "game": {
-            "id": 0,
-            "name": "坦克大战",
-            "icon": "icon",
-            "image": "image",
-            "description": "新奇的双人合作坦克手游",
-            "category": "射击",
-            "downloadLink": "http://120.25.238.161/test.apk",
-            "packageName": "com.FDU.TANK",
-            "downloadText": "test",
-            "uri": "tank://TANK.FDU.com/launch?username="
-        },
-        "time": 1514119891182,
-        "title": "hoasdhfoahfoa",
-        "image": "assets/icon/favicon.ico"
+        "time": 1514119890182,
+        "image": "http://120.25.238.161/PM/tank/record-images/Record_wzh123_1514215338888.png"
     }
 ]

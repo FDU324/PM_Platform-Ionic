@@ -11,6 +11,7 @@ export class MomentService {
     user: User;
     moments: Moment[];
     observers: any[];
+    newMomentCount: number;
 
     constructor(public http: HttpClient,
                 public userService: UserService,
@@ -20,31 +21,44 @@ export class MomentService {
     updateAfterLogin() {
         this.user = this.userService.getCurrentUser();
         this.observers = [];
+        this.newMomentCount = 0;
 
         // TODO:建立socket后取消下一行注释
         // this.receiveSocketOn();
 
         return this.requestMoments().then(data => {
-            console.log(data);
-            this.moments = JSON.parse(JSON.stringify(data));
+            return data;
         }).catch(err => {
-            console.log('MomentService err' + err);
+
         });
     }
 
     receiveSocketOn() {
-        this.socketService.getSocket().on('receiveMoment', (data) => {
-            this.moments = JSON.parse(JSON.stringify(data));
+        this.socketService.getSocket().on('newReport', (data) => {
+            this.requestMoments().then(data => {
+                this.update();
+            }).catch(err => {
+            });
         });
     }
 
+    getNewMomentCount(): number {
+        return this.newMomentCount;
+    }
+
     requestMoments() {
-        // TODO:改为服务器地址
-        return this.http.get('assets/data/moments-mock.json').toPromise().then(data => {
-            return data;
+        return this.http.get('http://localhost:1337/userdata/getMoments?username=' + this.user.username, {responseType: 'text'}).toPromise().then(data => {
+            if (data === 'fail') {
+                return Promise.reject('error');
+            }
+            this.moments = JSON.parse(data).map(i => {
+                const user = new User(i['user']['username'], i['user']['email'], i['user']['nickname'], 'assets/icon/favicon.ico');
+                return new Moment(user, parseInt(i['time'], 10), i['image'], '坦克大战');
+            });
+            return Promise.resolve('success');
         }).catch(err => {
-            console.log('getGameList error');
-            return this.moments;
+            console.log('getGameList error:' + err);
+            return Promise.reject('error');
         });
     }
 

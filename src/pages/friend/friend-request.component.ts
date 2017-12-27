@@ -34,7 +34,6 @@ export class FriendRequestPage {
 
     acceptRequest(friend: User) {
         this.friendService.acceptRequest(this.user.username, friend.username);
-        console.log('accept request!');
     }
 
 
