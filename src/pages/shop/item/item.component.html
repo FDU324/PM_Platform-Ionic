@@ -8,17 +8,28 @@
 
 <ion-content padding>
 
-    <ion-grid *ngFor="let item of itemList">
+    <ion-grid *ngFor="let item of itemList" style="border-bottom:medium solid #d0d0d0">
+        <ion-row style="margin-left: 2px; font-size: large; font-weight: bold">
+            {{item.name}}
+        </ion-row>
         <ion-row>
-            <ion-col col-3>{{item.icon}}</ion-col>
-            <ion-col col-9>
+            <ion-col col-3>
+                <img src="{{item.icon}}" alt="{{item.name}}" width="60px" height="60px">
+            </ion-col>
+            <ion-col col-5>
+                <ion-row *ngFor="let key of getKeys(item.description)">
+                    {{key}}：{{item.description[key]}}
+                </ion-row>
+            </ion-col>
+            <ion-col col-4>
                 <ion-row>
-                    <ion-col col-9>{{item.name}}</ion-col>
-                    <ion-col col-3>{{item.price}}</ion-col>
+                    库存：{{item.store}}
                 </ion-row>
                 <ion-row>
-                    <ion-col col-9>{{item.description}}</ion-col>
-                    <ion-col col-3 (click)="purchaseItem(item.id)">购买</ion-col>
+                    金币：{{item.price}}
+                </ion-row>
+                <ion-row (click)="purchaseItem(item)">
+                    购买
                 </ion-row>
             </ion-col>
         </ion-row>

@@ -1,15 +1,15 @@
 /**
  * Created by kevintestt on 2017/12/10.
  */
-import {Game} from "./game";
 
 export class Item {
     constructor(
-        public id: number,
-        public game: Game,
+        public id: string,
         public name: string,
+        public currency: string,
+        public price: number,
+        public store: number,
         public icon: string,
-        public description: string,
-        public price: number) {
+        public description: Object) {
     }
 }
