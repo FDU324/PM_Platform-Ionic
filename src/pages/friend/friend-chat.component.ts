@@ -75,6 +75,7 @@ export class FriendChatPage {
     }
 
     sendMessage() {
+        console.log(this.friend);
         this.friendService.sendMessage(this.user, this.friend, 'text', this.inputContent).then(
             (session) => {
                 if (typeof session !== 'string') {

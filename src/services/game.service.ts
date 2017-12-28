@@ -15,18 +15,18 @@ export class GameService {
     init() {
         return this.getGameListFromServer().then(data => {
             this.gameList = data;
-            for (let game of this.gameList) {
-                game.downloading = false;
-                game.loadPercent = 0;
-                let sApp = startApp.set({
-                    "package": game.packageName,
-                });
-                sApp.check(function(values) {
-                    game.startText = "打开";
-                }, function(error) {
-                    game.startText = "下载";
-                });
-            }
+            // for (let game of this.gameList) {
+            //     game.downloading = false;
+            //     game.loadPercent = 0;
+            //     let sApp = startApp.set({
+            //         "package": game.packageName,
+            //     });
+            //     sApp.check(function(values) {
+            //         game.startText = "打开";
+            //     }, function(error) {
+            //         game.startText = "下载";
+            //     });
+            // }
         })
     }
 

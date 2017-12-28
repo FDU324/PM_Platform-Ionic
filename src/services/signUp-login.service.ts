@@ -43,48 +43,49 @@ export class SignUpLoginService {
             const userImage = format("http://120.25.238.161/PM/platform/userImg/%s.jpg", Math.floor(Math.random()*10));
             const user = new User(dataJson['Username'], dataJson['PrivateInfo']['Email'], dataJson['TitleInfo']['DisplayName'], userImage);
 
-            const updateAll = [
-                this.userService.setCurrentUser(user),
-                // this.friendService.updateAfterLogin(),
-                // this.chatService.updateAfterLogin(),
-                this.momentService.updateAfterLogin(),
-            ];
+            // const updateAll = [
+            //     this.userService.setCurrentUser(user),
+            //     // this.friendService.updateAfterLogin(),
+            //     // this.chatService.updateAfterLogin(),
+            //     this.momentService.updateAfterLogin(),
+            // ];
 
-            return Promise.all(updateAll).then(data => {
-                console.log('update all services success');
-                return Promise.resolve(user);
-            }).catch(err => {
-                console.log(err);
-                return Promise.reject('error');
-            });
-
-
-            // return this.socketService.socketConnect().then(data => {
-            //     if (data !== 'success') {
-            //         return Promise.reject('AccountService-login-error');
-            //     }
-            //
-            //     return this.socketService.emitPromise('login', user.username).then((data) => {
-            //         if (data === 'success') {
-            //             // 更新所有service的变量
-            //             const updateAll = [
-            //                 this.setCurrentUser(user),
-            //                 this.friendService.updateAfterLogin(),
-            //                 // this.chatService.updateAfterLogin(),
-            //                 this.momentService.updateAfterLogin(),
-            //             ];
-            //
-            //             return Promise.all(updateAll).then(data => {
-            //                 console.log('update all services success');
-            //                 return Promise.resolve(user);
-            //             });
-            //         }
-            //         return Promise.reject('AccountService-login-error');
-            //     }).catch(err => {
-            //         console.log(`AccountService-login-error: ${err}`);
-            //         return Promise.reject('error');
-            //     });
+            // return Promise.all(updateAll).then(data => {
+            //     console.log('update all services success');
+            //     return Promise.resolve(user);
+            // }).catch(err => {
+            //     console.log(err);
+            //     return Promise.reject('error');
             // });
+
+
+            return this.socketService.socketConnect().then(data => {
+                if (data !== 'success') {
+                    return Promise.reject('AccountService-login-error');
+                }
+            
+                return this.socketService.emitPromise('login', user.username).then((data) => {
+                    if (data === 'success') {
+                        console.log("connect socket")
+                        // 更新所有service的变量
+                        const updateAll = [
+                            this.userService.setCurrentUser(user),
+                            this.friendService.updateAfterLogin(),
+                            // this.chatService.updateAfterLogin(),
+                            this.momentService.updateAfterLogin(),
+                        ];
+            
+                        return Promise.all(updateAll).then(data => {
+                            console.log('update all services success');
+                            return Promise.resolve(user);
+                        });
+                    }
+                    return Promise.reject('AccountService-login-error');
+                }).catch(err => {
+                    console.log(`AccountService-login-error: ${err}`);
+                    return Promise.reject('error');
+                });
+            });
         }).catch(err => {
             console.log('AccountService login error: ', err);
             return Promise.reject('error');

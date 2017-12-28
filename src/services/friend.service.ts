@@ -10,6 +10,7 @@ import {MomentService} from "./moment.service";
 
 @Injectable()
 export class FriendService {
+    currentUser: User;
     sessions: Session[];
     observers: any[];
     friendReqList: User[];
@@ -19,12 +20,13 @@ export class FriendService {
     constructor(public socketService: SocketService,
                 public momentService: MomentService,
                 public http: HttpClient) {
-        this.sessions = this.mockSessions();
+        this.sessions = [];
         this.observers = [];
         this.friendReqList = [
             new User('newOne', '123@me.com', '新来的', 'assets/icon/favicon.ico'),
         ];
     }
+
 
     updateAfterLogin() {
         this.observers = [];
@@ -46,8 +48,11 @@ export class FriendService {
 
         this.socketService.getSocket().on('newMessage', (messageStr) => {
             const data = JSON.parse(messageStr);
-
-            const session = this.sessions.find(session => session.friend.username === data.username);
+            console.log("new message!");
+            console.log(data);
+            
+            let session = this.sessions.find(session => session.friend.username === data.from);
+            console.log(session.friend.username);
             session.messages.unshift(new Message('receive', 'text', data.content, data.time));
             session.newMessageCount++;
             this.updatePages();
@@ -103,7 +108,7 @@ export class FriendService {
     }
 
     sendMessage(user: User, friend: User, type: string, content) {
-        const message = new Message('send', type, content, Date.now());
+        const message = new Message(user.username, type, content, Date.now());
 
         //console.log(content);
         //console.log(this.sessionList);
@@ -113,6 +118,8 @@ export class FriendService {
             to: friend.username,
             message: message
         };
+
+        console.log(sendData);
 
         return this.socketService.emitPromise('sendMessage', JSON.stringify(sendData)).then((data) => {
             if (data === 'success') {
@@ -141,29 +148,29 @@ export class FriendService {
             myUsername: myUsername,
             friendUsername: friendUsername
         };
-        const friend2 = new User('测试添加', '123@me.com', '测试添加', 'assets/icon/favicon.ico');
+        // const friend2 = new User('测试添加', '123@me.com', '测试添加', 'assets/icon/favicon.ico');
 
-        this.sessions.push(new Session(friend2, [new Message('receive', 'text', `测试数据`, Date.now())], 0));
+        // this.sessions.push(new Session(friend2, [new Message('receive', 'text', `测试数据`, Date.now())], 0));
 
-        return Promise.resolve('success');
+        // return Promise.resolve('success');
 
 
-        // return this.http.post('http://localhost:1337/friend/addFriend', body, {responseType: 'text'}).toPromise().then(res => {
-        //     if (res === 'fail') {
-        //         return Promise.reject('fail');
-        //     }
-        //
-        //     console.log(res);
-        //     const friend2 = new User('测试添加', '123@me.com', '测试添加', 'assets/icon/favicon.ico');
-        //
-        //     this.sessions.push(new Session(friend2, [], 0));
-        //
-        //     return Promise.resolve('success');
-        //
-        // }).catch(err => {
-        //     console.log('FriendService:' + err);
-        //     return Promise.reject('fail');
-        // });
+        return this.http.post('http://localhost:1337/friend/addFriend', body, {responseType: 'text'}).toPromise().then(res => {
+            if (res === 'fail') {
+                return Promise.reject('fail');
+            }
+        
+            const data = JSON.parse(res);
+            const friend2 = new User(friendUsername, "mock@email.com", data.friendNickname, 'assets/icon/favicon.ico');
+        
+            this.sessions.push(new Session(friend2, [new Message(friend2.nickname, 'text', `成功添加好友`, Date.now())], 0));
+        
+            return Promise.resolve('success');
+        
+        }).catch(err => {
+            console.log('FriendService:' + err);
+            return Promise.reject('fail');
+        });
     }
 
     searchUser(myUsername: string, friendUsername: string) {

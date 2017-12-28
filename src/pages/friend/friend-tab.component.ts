@@ -29,6 +29,7 @@ export class FriendTabPage {
     }
 
     ionViewDidEnter() {
+        this.sessions = this.friendService.getSessions();
         this.friendService.registerPage(this);
     }
 
@@ -41,6 +42,7 @@ export class FriendTabPage {
     }
 
     chat(session: Session) {
+        console.log(session);
         this.appCtrl.getRootNav().push(FriendChatPage, {
             user: this.user,
             session: session,
