@@ -112,7 +112,8 @@ export class FriendService {
     }
 
     clearNewMessages(session: Session) {
-
+        this.newMessageCount -= session.newMessageCount;
+        session.newMessageCount = 0;
     }
 
     registerPage(page: any) {
