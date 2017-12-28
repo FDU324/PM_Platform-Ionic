@@ -57,7 +57,7 @@ export class MomentService {
             });
             return Promise.resolve('success');
         }).catch(err => {
-            console.log('getGameList error:' + err);
+            console.log('requestMoments error:' , err);
             return Promise.reject('error');
         });
     }

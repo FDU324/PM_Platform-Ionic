@@ -51,7 +51,7 @@ export class FriendService {
 
             return Promise.resolve('success');
         }).catch(err => {
-            console.log(' error:' + err);
+            console.log(' getFriendList:' , err);
             return Promise.reject('error');
         });
     }
