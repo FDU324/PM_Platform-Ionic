@@ -18,13 +18,12 @@
             <ion-avatar item-start>
                 <img [src]="session.friend.userImage">
             </ion-avatar>
-            <ion-badge *ngIf="session.newMessageCount>0" item-right color="danger">{{session.newMessageCount}}</ion-badge>
+            <ion-badge *ngIf="session.newMessageCount>0" item-right color="danger">{{session.newMessageCount}}
+            </ion-badge>
             <h3>{{session.friend.nickname}}</h3>
-            <p *ngIf="session.messages[0].type==='text'">{{session.messages[0].content}}</p>
-            <p *ngIf="session.messages[0].type==='images'">[图片]</p>
-            <p *ngIf="session.messages[0].type==='locations'">[位置]</p>
-            <p *ngIf="session.messages[0].type==='moment'">[动态]</p>
-            <ion-note item-right>{{session.messages[0].time | myDatePipe}}</ion-note>
+            <p *ngIf="session.messages.length > 0">{{session.messages[0].content}}</p>
+            <p *ngIf="session.messages.length === 0"></p>
+            <ion-note item-right *ngIf="session.messages.length > 0">{{session.messages[0].time | myDatePipe}}</ion-note>
         </button>
 
     </ion-list>

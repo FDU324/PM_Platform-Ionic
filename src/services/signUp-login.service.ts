@@ -63,18 +63,18 @@ export class SignUpLoginService {
                 if (data !== 'success') {
                     return Promise.reject('AccountService-login-error');
                 }
-            
+
                 return this.socketService.emitPromise('login', user.username).then((data) => {
                     if (data === 'success') {
-                        console.log("connect socket")
+                        console.log("connect socket");
                         // 更新所有service的变量
+                        this.userService.setCurrentUser(user);
                         const updateAll = [
-                            this.userService.setCurrentUser(user),
                             this.friendService.updateAfterLogin(),
                             // this.chatService.updateAfterLogin(),
                             this.momentService.updateAfterLogin(),
                         ];
-            
+
                         return Promise.all(updateAll).then(data => {
                             console.log('update all services success');
                             return Promise.resolve(user);

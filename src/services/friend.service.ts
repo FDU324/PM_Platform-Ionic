@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import { format } from 'util';
 
 import {Session} from '../models/session';
 import {User} from '../models/user';
@@ -7,35 +8,51 @@ import {Message} from '../models/message';
 
 import {SocketService} from './socket.service';
 import {MomentService} from "./moment.service";
+import {Moment} from "../models/moment";
+import {UserService} from "./user.service";
 
 @Injectable()
 export class FriendService {
-    currentUser: User;
+    user: User;
     sessions: Session[];
     observers: any[];
     friendReqList: User[];
     newMessageCount: number;
 
 
-    constructor(public socketService: SocketService,
+    constructor(public userService: UserService,
+                public socketService: SocketService,
                 public momentService: MomentService,
                 public http: HttpClient) {
-        this.sessions = [];
-        this.observers = [];
-        this.friendReqList = [
-            new User('newOne', '123@me.com', '新来的', 'assets/icon/favicon.ico'),
-        ];
     }
 
 
     updateAfterLogin() {
         this.observers = [];
-
+        this.user = this.userService.getCurrentUser();
         this.sessions = [];
         this.friendReqList = [];
         this.newMessageCount = 0;
 
         this.receiveSocketOn();
+
+        return this.http.get('http://localhost:1337/friend/getFriendList?myUsername=' + this.user.username, {responseType: 'text'}).toPromise().then(data => {
+            if (data === 'fail') {
+                return Promise.reject('error');
+            }
+
+            const jsonData = JSON.parse(data);
+            this.sessions = jsonData.map(i => {
+                const userImage = format("http://120.25.238.161/PM/platform/userImg/%s.jpg", Math.floor(Math.random()*10));
+                const user = new User(i['Username'],'',i['TitleDisplayName'],userImage);
+                return  new Session(user, [], 0);
+            });
+
+            return Promise.resolve('success');
+        }).catch(err => {
+            console.log(' error:' + err);
+            return Promise.reject('error');
+        });
     }
 
     receiveSocketOn() {
@@ -50,7 +67,7 @@ export class FriendService {
             const data = JSON.parse(messageStr);
             console.log("new message!");
             console.log(data);
-            
+
             let session = this.sessions.find(session => session.friend.username === data.from);
             console.log(session.friend.username);
             session.messages.unshift(new Message('receive', 'text', data.content, data.time));
@@ -159,14 +176,14 @@ export class FriendService {
             if (res === 'fail') {
                 return Promise.reject('fail');
             }
-        
+
             const data = JSON.parse(res);
             const friend2 = new User(friendUsername, "mock@email.com", data.friendNickname, 'assets/icon/favicon.ico');
-        
+
             this.sessions.push(new Session(friend2, [new Message(friend2.nickname, 'text', `成功添加好友`, Date.now())], 0));
-        
+
             return Promise.resolve('success');
-        
+
         }).catch(err => {
             console.log('FriendService:' + err);
             return Promise.reject('fail');
