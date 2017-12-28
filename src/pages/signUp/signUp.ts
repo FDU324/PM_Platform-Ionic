@@ -37,7 +37,7 @@ export class SignUpPage {
         this.email = '';
         this.password = '';
         this.nickname = '';
-        this.defaultImage = 'assets/icon/favicon.ico';
+        this.defaultImage = 'http://120.25.238.161/PM/platform/userImg/0.jpg';
         this.userImage = this.defaultImage;
         this.showPsw = false;
     }

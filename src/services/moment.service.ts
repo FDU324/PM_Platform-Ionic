@@ -52,7 +52,7 @@ export class MomentService {
                 return Promise.reject('error');
             }
             this.moments = JSON.parse(data).map(i => {
-                const user = new User(i['user']['username'], i['user']['email'], i['user']['nickname'], 'assets/icon/favicon.ico');
+                const user = new User(i['user']['username'], i['user']['email'], i['user']['nickname'], 'http://120.25.238.161/PM/platform/userImg/0.jpg');
                 return new Moment(user, parseInt(i['time'], 10), i['image'], '坦克大战');
             });
             return Promise.resolve('success');

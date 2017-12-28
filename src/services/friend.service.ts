@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import { format } from 'util';
+import {format} from 'util';
 
 import {Session} from '../models/session';
 import {User} from '../models/user';
@@ -44,9 +44,9 @@ export class FriendService {
 
             const jsonData = JSON.parse(data);
             this.sessions = jsonData.map(i => {
-                const userImage = format("http://120.25.238.161/PM/platform/userImg/%s.jpg", Math.floor(Math.random()*10));
-                const user = new User(i['Username'],'',i['TitleDisplayName'],userImage);
-                return  new Session(user, [], 0);
+                const userImage = 'http://120.25.238.161/PM/platform/userImg/0.jpg';
+                const user = new User(i['Username'], '', i['TitleDisplayName'], userImage);
+                return new Session(user, [], 0);
             });
 
             return Promise.resolve('success');
@@ -59,7 +59,8 @@ export class FriendService {
     receiveSocketOn() {
         this.socketService.getSocket().on('newFriend', (user) => {
             const data = JSON.parse(user);
-            const session = new Session(new User(data.username, "", data.nickname), [new Message('receive', 'text', `新的好友`, Date.now())], 0);
+            const userImage = 'http://120.25.238.161/PM/platform/userImg/0.jpg';
+            const session = new Session(new User(data.username, "", data.nickname, userImage), [new Message('receive', 'text', `新的好友`, Date.now())], 0);
             this.sessions.unshift(session);
             this.updatePages();
             // this.momentService.updateMoment(true);
@@ -175,7 +176,7 @@ export class FriendService {
 
 
         return this.http.post('http://localhost:1337/friend/addFriend', body, {responseType: 'text'}).toPromise().then(res => {
-            if(res === 'offline') {
+            if (res === 'offline') {
                 return Promise.reject('friend is offline');
             }
             if (res === 'fail') {
@@ -183,10 +184,10 @@ export class FriendService {
             }
 
             const data = JSON.parse(res);
-            const friend2 = new User(friendUsername, "mock@email.com", data.friendNickname, 'assets/icon/favicon.ico');
-        
+            const friend2 = new User(friendUsername, "mock@email.com", data.friendNickname, 'http://120.25.238.161/PM/platform/userImg/0.jpg');
+
             this.sessions.push(new Session(friend2, [new Message('send', 'text', `成功添加好友`, Date.now())], 0));
-        
+
             return Promise.resolve('success');
 
         }).catch(err => {
