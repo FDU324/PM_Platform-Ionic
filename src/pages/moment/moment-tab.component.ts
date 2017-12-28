@@ -27,6 +27,11 @@ export class MomentTabPage {
 
     ionViewDidEnter() {
         this.momentService.registerPage(this);
+        this.momentService.requestMoments().then(data => {
+            this.update();
+        }).catch(err => {
+           console.log('MomentTabPage ', err);
+        });
     }
 
     ionViewDidLeave() {
