@@ -33,6 +33,7 @@ export class ItemPage {
                 subTitle: '恭喜您，购买成功！',
                 buttons: ['好的']
             });
+            item.store++;
             alert.present();
         });
     }

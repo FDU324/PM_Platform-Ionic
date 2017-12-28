@@ -28,8 +28,9 @@
                 <ion-row>
                     金币：{{item.price}}
                 </ion-row>
-                <ion-row (click)="purchaseItem(item)">
-                    购买
+                <ion-row>
+                    <button ion-button color="default" outline style="height: 25px; margin-left: -3px" (click)="purchaseItem(item)" *ngIf="item.store === 0">购买</button>
+                    <button ion-button color="dark" outline style="height: 25px; margin-left: -3px" *ngIf="item.store !== 0">已拥有</button>
                 </ion-row>
             </ion-col>
         </ion-row>

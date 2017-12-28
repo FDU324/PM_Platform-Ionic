@@ -5,6 +5,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {UserService} from './user.service'
 import {Item} from '../models/item'
+import {format} from 'util'
 
 @Injectable()
 export class ShopService {
@@ -18,9 +19,12 @@ export class ShopService {
 
     getItemList() {
         this.itemList = [];
-        return this.http.get('http://192.168.1.100:1337/Store/getItemList').toPromise().then(data => {
+        return this.http.get('http://120.25.238.161:1337/Store/getItemList').toPromise().then(data => {
             for (let index in data) {
                 let item = data[index];
+                if (item.VirtualCurrencyPrices.JB === 0) {
+                    continue;
+                }
                 let tmp: Item = new Item(item.ItemId, item.DisplayName, "JB", item.VirtualCurrencyPrices.JB, 0, item.ItemImageUrl, {});
                 let description: any = JSON.parse(item.CustomData);
                 for (let key in description) {
@@ -29,44 +33,16 @@ export class ShopService {
                 }
                 this.itemList.push(tmp);
             }
-            //return this.http.get('http://192.168.1.100:1337/Store/getInventory?username=' + this.userService.getCurrentUser().username).toPromise();
-            return this.http.get('http://192.168.1.100:1337/Store/getItemList').toPromise();
+            let url = format('http://120.25.238.161:1337/Store/getInventory?username=%s', this.userService.getCurrentUser().username);
+            return this.http.get(url).toPromise();
+            //return this.http.get('http://120.25.238.161:1337/Store/getItemList').toPromise();
         }).then(data => {
-            let mock = [
-                {
-                    "ItemId": "NormalCannon",
-                    "ItemInstanceId": "6BAAFBA7E73C7D90",
-                    "ItemClass": "Cannon",
-                    "PurchaseDate": "2017-12-27T14:34:40.348Z",
-                    "CatalogVersion": "Cannon",
-                    "DisplayName": "普通炮弹",
-                    "UnitCurrency": "JB",
-                    "UnitPrice": 0
-                },
-                {
-                    "ItemId": "NormalCannon",
-                    "ItemInstanceId": "E4293B5036A368AB",
-                    "ItemClass": "Cannon",
-                    "PurchaseDate": "2017-12-27T14:26:41.058Z",
-                    "CatalogVersion": "Cannon",
-                    "DisplayName": "普通炮弹",
-                    "UnitCurrency": "JB",
-                    "UnitPrice": 0
-                },
-                {
-                    "ItemId": "NormalCannon",
-                    "ItemInstanceId": "E7A8143334FF0824",
-                    "ItemClass": "Cannon",
-                    "PurchaseDate": "2017-12-27T14:26:15.87Z",
-                    "CatalogVersion": "Cannon",
-                    "DisplayName": "普通炮弹",
-                    "UnitCurrency": "JB",
-                    "UnitPrice": 0
-                }
-            ];
-            for (let store of mock) {
-                console.log(store);
+            for (let index in data) {
+                let store = data[index];
                 let item = this.getItem(store.ItemId);
+                if (item === null) {
+                    continue;
+                }
                 item.store++;
             }
             return this.itemList;
@@ -77,7 +53,7 @@ export class ShopService {
     }
 
     purchaseItem(item) {
-        let url = 'http://192.168.1.100:1337/Store/PurchaseGoods?id=' + item.id + "&virtualCurrency=" + item.currency + "&price=" + item.price + "&username=" + this.userService.getCurrentUser().username;
+        let url = format('http://120.25.238.161:1337/Store/PurchaseGoods?id=%s&virtualCurrency=%s&price=%d&username=%s', item.id, item.currency, item.price, this.userService.getCurrentUser().username);
         console.log(url);
         return this.http.get(url).toPromise().then(data => {
             return true;

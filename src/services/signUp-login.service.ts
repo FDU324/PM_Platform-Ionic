@@ -34,7 +34,7 @@ export class SignUpLoginService {
         // this.momentService.updateAfterLogin();
         // return Promise.resolve(friend2);
 
-        return this.http.post('http://localhost:1337/user/login', body, {responseType: 'text'}).toPromise().then(data => {
+        return this.http.post('http://120.25.238.161:1337/user/login', body, {responseType: 'text'}).toPromise().then(data => {
             if (data === 'fail') {
                 return Promise.reject('fail');
             }
@@ -101,7 +101,7 @@ export class SignUpLoginService {
             userImage: userImage,
         };
 
-        return this.http.post('http://localhost:1337/user/reg', body, {responseType: 'text'}).toPromise().then(data => {
+        return this.http.post('http://120.25.238.161:1337/user/reg', body, {responseType: 'text'}).toPromise().then(data => {
             if (data === 'success') {
                 return Promise.resolve('success');
             } else {
